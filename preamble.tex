@@ -1,0 +1,41 @@
+
+% --------------------------------------------------
+% Store supervisors safely
+% --------------------------------------------------
+
+\newcommand{\supervisors}[1]{\def\thesupervisors{#1}}
+\supervisors{}
+% creates a new LaTeX command: \supervisors
+% #1 means it takes one argument
+% \def\thesupervisors{#1} - stores whatever you pass into a new internal macro called \thesupervisors.
+
+% --------------------------------------------------
+% Patch title to include supervisors
+% --------------------------------------------------
+
+\usepackage{etoolbox} % modify the title safely
+
+\makeatletter   % 
+\apptocmd{\@maketitle}{  % append content to an existing command, @ means private/internal
+  \vfill
+  \begin{center}
+    {\large Supervisors:\par}
+    \thesupervisors
+  \end{center}
+  \vspace{1cm}
+  \clearpage
+}{}{}
+\makeatother
+
+% --------------------------------------------------
+% Remove page number from title page only
+% --------------------------------------------------
+
+\usepackage{afterpage}
+\AtBeginDocument{
+  \thispagestyle{empty}
+}
+
+
+
+% \usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,decorations.pathreplacing,decorations.pathmorphing,shapes,matrix.symbols}

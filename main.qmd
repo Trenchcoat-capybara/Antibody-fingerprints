@@ -1,0 +1,86 @@
+---
+title: "Statistical Analysis of Immunoglobin Isotype Fingerprints Across Afflictions"
+author: "Jakob Gad Spoorendonk"
+engine: julia
+date: 2026-02-11
+header-includes:
+  - \supervisors{Veit Stefan Schwämmle\\ Xuan-Tung Trinh}
+bibliography: references.bib
+format:
+  pdf:
+    pdf-engine: xelatex
+    cite-method: biblatex
+    toc: true
+    toc-depth: 2
+    toc-float: false
+    toc-title: "Contents"
+    include-in-header:
+      - text: |
+          \usepackage{tikz}
+          \usetikzlibrary{positioning, chains}
+          \usepackage{graphicx}
+          \graphicspath{{Pictures/}}
+      - file : preamble.tex
+---
+\newpage
+# Introduction
+
+
+
+## Antibodies
+This is a test [@Kretschmer2017]
+
+### Variability
+
+### Isotypes
+#### IgD
+#### IgM
+#### IgG
+#### IgA
+#### IgE
+
+## Proteomics
+
+### Datasource - PRIDE
+
+### FragPipe
+
+# Project Description
+
+# Method 
+
+\tikzset{
+  block/.style = {
+    rectangle, 
+    draw, 
+    text width=10em, 
+    text centered, 
+    rounded corners, 
+    minimum height=3em
+  }
+}
+
+\begin{tikzpicture}
+[node distance = 5cm,
+start chain=going below,]
+\node (n1) at (0,0) [block] {\includegraphics*[height=2.5em]{PRIDE}};
+\node (n2) [block, right of=n1] {\includegraphics*[height=2.5em]{FragPipe}};
+\node (n3) [block, right of=n2] {\includegraphics*[height=2.5em]{Csvkit}};
+\node (n4) [block, below of=n1, yshift =2cm] {\includegraphics*[height=2.5em]{PostgreSQL}};
+\node (n5) [block, right of=n4] {\includegraphics*[height=2.5em]{DBI}};
+\node (n6) [block, right of=n5] {\includegraphics*[height=2.5em]{R}};
+
+\draw [->] (n1) -- (n2);
+\draw [->] (n2) -- (n3);
+\draw [thick,->] (n3) -- (n4);
+\draw [->] (n4) -- (n5);
+\draw [->] (n5) -- (n6);
+\end{tikzpicture}
+
+
+
+
+# Results
+# Discussion
+# Conclusion
+
