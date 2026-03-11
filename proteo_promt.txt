@@ -1,0 +1,3 @@
+docker run -it --rm -v ./:/data proteowizard/pwiz-skyline-i-agree-to-the-vendor-licenses wine msconvert ./*/*.wiff --mzML --filter "peakPicking true 1-" --filter "zeroSamples removeExtra" -z -o ./result
+
+docker run -it --rm -v ./:/data proteowizard/pwiz-skyline-i-agree-to-the-vendor-licenses wine msconvert ./*.wiff --mzML --filter "peakPicking true 1-" --filter "zeroSamples removeExtra" -z -o ./result
