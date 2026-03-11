@@ -1,0 +1,13 @@
+Uniprot entry
+
+IgM - P01871
+IgD - P01880
+IgE - P01854
+IgA1 - P01876
+IgA2 - P01877
+IgG1 - P01857
+IgG2 - P01859
+IgG3 - P01860
+IgG4 - P01861
+
+
