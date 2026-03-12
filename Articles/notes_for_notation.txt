@@ -1,0 +1,9 @@
+an overview of my attempted use of colors for annotation of the articles in this project
+
+Yellow - Information of interest
+  notes should tell why this info is of interest
+Orange - Further reading
+Red -
+Purple -
+Blue -
+Green -

@@ -11,6 +11,11 @@ MS2
 Label
 modifications
 validation 
+## PXD001171 - Human Serum LC-MS/MS-based serum proteomics for identification of candidate biomarkers for hepatocellular carcinoma
+instrument - LTQ Orbitrap Velos
+Modification - acetylated residue, iodoacetamide deriviatized residue
+Charge state - 4 (from mzXML file)
+
 ## PXD020601 - Serum proteomics in COVID-19 patients: Altered coagulation and complement status as a function of IL-6 level
 patients - 33 COVID-19 patients
         - 19 positive
