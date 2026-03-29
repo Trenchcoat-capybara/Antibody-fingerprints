@@ -25,21 +25,54 @@ format:
 \newpage
 # Introduction
 
+## Antibodies  
+Antibodies are proteins that make up a part of the acquired immune system. They are central in humoral immunity attatching themselves to recognized targets to trigger various reactions. All human antibodies are heterodimers that are made up of two dimers of a light and a heavy chain pairing. Both chains contain a variable region. The light chain contains a single conserved region, while the heavy chain contains either 4 (IgM and IgE) or 3 (the rest) conserved regions, this depends on which isotype of antibody it is. Between the first conserved region - which is connected to the variable region - is a hinge region, depending on the isotype the hinge region can be longer or shorter, controlling the flexibility of the antibody arms [@Kretschmer2017].
+
+\newline
+\begin{center}
+\includegraphics*[height=10cm]{Antibodies_Kretschmer}\
+\end{center}
+Figure 1: Graphic overview of antibody architecture by Kreschmer et al. 2017 [@Kretschmer2017]
+\newline
 
 
-## Antibodies
-This is a test [@Kretschmer2017]
+### Variable Region
+The variable region of an antibody is made up of the N-terminal region of the light and heavy chains [@Chi2020]. The variable region is the part of the antibody that react with an antigen to trigger the receptor complex [@Kretschmer2017]. 
 
-### Variability
+### Constant Region
+The constant region of the heavy chain is what determines the isotype of the antibody. The isotype of the antibody decides which effector function the antibody will trigger when activated [@Stavnezer2008]. The function of an antibody is dependent on which immune receptors - usually nammed Fc\_ receptors - it can interact with, as it is the conserved part of the antibody that interacts with the receptor, the structure of the conserved part decides the reaction that is triggered. The antibodies and their respective receptors function as the initiation receptor for the produced reaction [@Kretschmer2017]. 
+
+### Hinge Region
+The different isotypes and subtypes have different hinge regions. The hinge region of an antibody is found between the first and second constant regions of the heavy chain.
+
+## Variability
+
+### V(D)J Recombination
+
+### Activation-induced cytidine deaminase (AID)
+Activation-induced cytidine deaminase is a protein that plays a central role in the adaptive immune system. It plays a central role in the incredible mutation frequency of the variable region during an infection. 
+
+#### Somatic Hyper Mutation (SHM)
+
+#### Class Switch Recombination (CSR)
 
 ### Isotypes
-#### IgD
+The different isotypes differ structually in various ways, not just in their length but also in their glycosylation and their cystein placement. It is these structural differences that the body uses to selectively interact with the individual antibodies to mediate which reaction is triggered by which isotype [@Kretschmer2017].
+
 #### IgM
+IgM is the default isotype of mature B cells. It contains 4 conserved regions, and in the blood they form pentamers. They are the best activators of the complement system [@Kretschmer2017].
+
+#### IgD
+IgD is the other type of immunoglobin that is produced by naive B cells [@Stavnezer2008]. It is believed to have arrisen evolutionarily slightly after IgM, and is preserved from fish to humans. The maturation of B cells is characterized by progressive up-regulation of IgD receptors. B cells that purely express IgD are anergic B cells and tend to exist in the perepheri parts of the body, but interestingly not in the intestine [@Gutzeit2018]. This may be due to the presence of the intestinal microfauna. If antibodies were a danger to the commensal microbes there should be a similar situation for IgA antibodies, which are the main excretory antibodies.
+
 #### IgG
+
 #### IgA
+
 #### IgE
 
 ## Proteomics
+
 
 ### Datasource - PRIDE
 
@@ -49,6 +82,7 @@ This is a test [@Kretschmer2017]
 
 # Method 
 
+\begin{center}
 \tikzset{
   block/.style = {
     rectangle, 
@@ -76,11 +110,12 @@ start chain=going below,]
 \draw [->] (n4) -- (n5);
 \draw [->] (n5) -- (n6);
 \end{tikzpicture}
-
+\end{center}
 
 
 
 # Results
 # Discussion
 # Conclusion
+# Bibliography
 
