@@ -4,7 +4,7 @@ author: "Jakob Gad Spoorendonk"
 engine: julia
 date: 2026-02-11
 header-includes:
-  - \supervisors{Veit Stefan Schwämmle\\ Xuan-Tung Trinh}
+  - \supervisors{Veit Stefan Schwämmle\protect\\ Xuan-Tung Trinh}
 bibliography: references.bib
 format:
   pdf:
@@ -26,61 +26,95 @@ format:
 # Introduction
 
 ## Antibodies  
-Antibodies are proteins that make up a part of the acquired immune system. They are central in humoral immunity attatching themselves to recognized targets to trigger various reactions. All human antibodies are heterodimers that are made up of two dimers of a light and a heavy chain pairing. Both chains contain a variable region. The light chain contains a single conserved region, while the heavy chain contains either 4 (IgM and IgE) or 3 (the rest) conserved regions, this depends on which isotype of antibody it is. Between the first conserved region - which is connected to the variable region - is a hinge region, depending on the isotype the hinge region can be longer or shorter, controlling the flexibility of the antibody arms [@Kretschmer2017].
+Antibodies are proteins that make up a part of the adaptive immune system. They are central in humoral immunity attatching themselves to recognized targets to trigger various reactions. All human antibodies are heterodimers that are made up of two dimers of a light and a heavy chain pairing. Both chains contain a variable region. The light chain contains a single conserved region, while the heavy chain contains either 4 (IgM and IgE) or 3 (the rest) conserved regions, this depends on which isotype of antibody it is. Between the first conserved region - which is connected to the variable region - is a hinge region, depending on the isotype the hinge region can be longer or shorter, controlling the flexibility of the antibody arms [@Kretschmer2017]. The different isotypes can interact with different groups of immune receptors, refered to as Fc receptors.
 
-\newline
 \begin{center}
-\includegraphics*[height=10cm]{Antibodies_Kretschmer}\
+\includegraphics*[height=10cm]{Antibodies_Kretschmer}
 \end{center}
-Figure 1: Graphic overview of antibody architecture by Kreschmer et al. 2017 [@Kretschmer2017]
-\newline
+Figure 1: Graphic overview of antibody architecture by Kreschmer et al. 2017 [@Kretschmer2017]  
 
 
 ### Variable Region
-The variable region of an antibody is made up of the N-terminal region of the light and heavy chains [@Chi2020]. The variable region is the part of the antibody that react with an antigen to trigger the receptor complex [@Kretschmer2017]. 
+The variable region of an antibody is made up of the N-terminal region of the light and heavy chains [@Chi2020]. The variable region is the part of the antibody that react with an antigen to trigger the receptor complex [@Kretschmer2017]. The variability is generated in several ways and allows the body to produce antibodies that can quickly be made specific for a single protein that may appear.
+
 
 ### Constant Region
-The constant region of the heavy chain is what determines the isotype of the antibody. The isotype of the antibody decides which effector function the antibody will trigger when activated [@Stavnezer2008]. The function of an antibody is dependent on which immune receptors - usually nammed Fc\_ receptors - it can interact with, as it is the conserved part of the antibody that interacts with the receptor, the structure of the conserved part decides the reaction that is triggered. The antibodies and their respective receptors function as the initiation receptor for the produced reaction [@Kretschmer2017]. 
+The constant region of the heavy chain is what determines the isotype of the antibody. The isotype of the antibody decides which effector function the antibody will trigger when activated [@Stavnezer2008]. The function of an antibody is dependent on which immune receptors - usually named Fc_R_ receptors - it can interact with, as it is the conserved part of the antibody that interacts with the receptor, the structure of the conserved part decides the reaction that is triggered. The antibodies and their respective receptors function as the initiation receptor for the produced reaction [@Kretschmer2017]. 
+
 
 ### Hinge Region
-The different isotypes and subtypes have different hinge regions. The hinge region of an antibody is found between the first and second constant regions of the heavy chain.
+The different isotypes and subtypes have different hinge regions. The hinge region of an antibody is found between the first and second constant regions of the heavy chain. The length and disulfide bond of the hinge region affect the flexibility and reach of the variable region. They also affects the affinity for Fc receptor binding and mediated effector functions [@Kretschmer2017].
+
 
 ## Variability
+B cells have several ways to transform their antibodies, be it function or specificity. Function is mainly controlled by the Constant region of the heavy chain, while the variable region of both chains work together to decide what the antibody will attatch and react to.
 
-### V(D)J Recombination
 
 ### Activation-induced cytidine deaminase (AID)
-Activation-induced cytidine deaminase is a protein that plays a central role in the adaptive immune system. It plays a central role in the incredible mutation frequency of the variable region during an infection. 
+Activation-induced cytidine deaminase is a protein that plays a central role in the adaptive immune system. It plays a central role in the processes of CSR and SHM which are central in the generation of variability. The main mechanism of AID is the controlled deamination of cystein in the variable region of the antibodies. When uracil is detected in DNA it triggers a doublestranded break in the DNA which is then repaired replacing uracil with cystein, as it originally was [@Chi2020]. AID indirectly contribute to the DNA changeing from break to break, by suppressing the normal pathways that the cell would use to repair these kinds of DNA damage. This suppression forces the cell to repair the DNA imperfectly leading to mistakes which contribute to the variation in the cells variable region [@Anvari2018].
+
 
 #### Somatic Hyper Mutation (SHM)
+Somatic hyper mutation is a way for the B cell to insert, delete, and swap bases between generations. It mainly occurs in the variable region of the DNA where it causes minor changes in the DNA making up the variable region, thereby increasing the number of potential combinations that can be created [@Chi2020]. Higher affinity mutations are selected for further mitosis, this causes the next generation of antibody producing B cells to produce antibodies of higher affinity [@Victora2010].
+
 
 #### Class Switch Recombination (CSR)
+Class switch recombination is the process by which B cells change the constant region of the heavy chain of the antibodies they produce. This is done by splicing different parts of the DNA together, cutting out the middle from the splicing [@Liu2024]. This makes it impossible for the transformation to go backwards, as the DNA is not there.
+Even though there is no mutation during CSR, AID is necessary for triggering the double strand breaks for recombining the DNA. CSR occurs by breaking two switch regions in the DNA, it is between these two regions that the DNA is removed and recombined to allow for the production of another isotype of antibody [@Liu2024]. With the excision of only some DNA it allows the downstream B cell generations to perform further CSRs for further adaptation.
 
-### Isotypes
+
+### V(D)J Recombination
+The variability of the variable region comes partially from V(D)J Recombination. V(D)J Recombination is different between the variable regions of the heavy chain and light chain. On the heavy chain it involves all three segments the V(ariable), D(diverse), and J(joining) segments, the light chain only has the V and J segments. By combining multiple different V and J segments it is possible to generate several different combinations [@Chi2020]. By combining these basic forms with inserted bases from SHM it is possible for the immunne system to reach a high level of starting diversity for affinity maturation to improve upon.
+
+
+## Isotypes
 The different isotypes differ structually in various ways, not just in their length but also in their glycosylation and their cystein placement. It is these structural differences that the body uses to selectively interact with the individual antibodies to mediate which reaction is triggered by which isotype [@Kretschmer2017].
 
-#### IgM
-IgM is the default isotype of mature B cells. It contains 4 conserved regions, and in the blood they form pentamers. They are the best activators of the complement system [@Kretschmer2017].
+### IgM
+IgM is the default isotype of mature B cells. It contains 4 conserved regions, and in the blood they form pentamers. They are the best activators of the complement system. IgM can be produced without being exposed to antigenic stimuli, but they can also be produced against invading pathogens [@Kretschmer2017]. It serves as the primary defense against early pathogen invasions, before adaptive immunity has been activated [@Chi2020].
 
-#### IgD
+### IgD
 IgD is the other type of immunoglobin that is produced by naive B cells [@Stavnezer2008]. It is believed to have arrisen evolutionarily slightly after IgM, and is preserved from fish to humans. The maturation of B cells is characterized by progressive up-regulation of IgD receptors. B cells that purely express IgD are anergic B cells and tend to exist in the perepheri parts of the body, but interestingly not in the intestine [@Gutzeit2018]. This may be due to the presence of the intestinal microfauna. If antibodies were a danger to the commensal microbes there should be a similar situation for IgA antibodies, which are the main excretory antibodies.
 
-#### IgG
+### IgG
+IgG antibodies come in four subtypes, IgG1, IgG2, IgG3, and IgG4. The subtypes are numberd in order of decreasing abundance. All four subtypes can be transcribed by the G class B cells. The different subtypes have different affinity for different receptors of the Fcγ family. Through the different affinities they fulfil different purposes in the immune system. With the exception of FcγRIIb, all of the FcγR receptors mediate activating functions [@Kapur2014].
 
-#### IgA
+#### IgG1
+IgG1 is the bodys response to soluble proteins and membrane proteins. They are the most abundant of the IgG antibodies, and are often encountered together with the other IgG subtypes, especially IgG3 and IgG4 [@Vidarsson2014]. IgG1 is able to cross-link and react with all of the different FcγR receptors [@Kapur2014]. 
 
-#### IgE
+#### IgG2
+IgGs reaction to bacterial capsular polysaccharides is almost completely made up of IgG2 antibodies [@Vidarsson2014]. IgG2 mainly triggers receptors on neutrophiles, it might also be able to trigger receptors on NK cells and some macrophages [@Kapur2014]. This would lower the scope of the reaction, triggering only the necessary cells for fighting the bacterial infection. Therefore no antibodies are wasted on other activities, leading to an improved immune response.
+
+#### IgG3
+IgG3 is the antibody with the longest hinge domain, counting up to 62 amino acids in length. It also has the highest affinity for C1q which makes it the best IgG to trigger the complement system. It does have the shortest halflife amongst the long lived IgGs. Just like IgG1 it can interact with all of the FcγR [@Kapur2014].
+
+#### IgG4
+IgG4 is an antibody that is often formed following repeated non-infectious exposure. It is linked to downregulation of immune reaction towards the antigen and is usually seen correlating with sucessful immunotherapy [@Vidarsson2014].
+
+### IgA
+IgA is the most produced antibody isotype in the body, it is the second most prominent antibody in the blood. More IgA is produced in total than all the other isotypes combined. It is encountered in all mammals and birds. Most IgA is secreted out of the body, usually in the form of SIgA, which forms a dimer outside of the body, and sometimes even a tetramer. IgA comes in two major subtypes, IgA1 and IgA2. An obvious difference between the two subtypes, is the length of their hinge regions. THe significantly longer hinge region of IgA1 makes the arms with the variable region significantly more flexible [@Sousa-Pereira2019].  
+
+
+### IgE
+IgE is the antibody type mainly associated with allergic and parasitic diseases. It mainly interacts with receptors on most cells, basophils, monocytes and macrophages, with some other immune cells carrying lower affinity receptors. When a antibody-receptor complex is triggered the triggerd cells degranulate completely, this degranulatinon triggers high levels of inflammation and cascading reactions [@Kretschmer2017]. The relatively higher affinity of IgE receptors drastically lowers the amount of IgE that is freely found in blood serum.  
+
+IgE is the least abundant antibody in the blood. This is probably partially due to the lower life lifespan when unbound, which is 1.5 days [@Gutzeit2018], and the fact that it is produced in response to parasites, which are more rare than microbial lifeforms. In some individuals IgE antibodies are produced as a response to harmless antigens, this failure can lead to the symptoms of allergy [@Anvari2018]. Perhaps the growing prevalence of allergy is due to the lower variation in IgE leading to an increased amount of Mast cells being triggered by a single harmless antigen.
+
 
 ## Proteomics
 
 
 ### Datasource - PRIDE
 
+
 ### FragPipe
+
 
 # Project Description
 
+
 # Method 
+
 
 \begin{center}
 \tikzset{
@@ -115,7 +149,12 @@ start chain=going below,]
 
 
 # Results
-# Discussion
-# Conclusion
-# Bibliography
 
+
+# Discussion
+
+
+# Conclusion
+
+
+# Bibliography
