@@ -105,11 +105,10 @@ Proteomics is the study of a large amount of proteins from the same source. It a
 
 
 ### Datasource - PRIDE - NOT DONE YET
-PRIDE is the online protein repository of the European Molecular Biology Laboratory (EMBL) It stands for The PRoteomics IDEntifications Archive database, and is a public data repository for mass spectrometry data. The goal of PRIDE is to support the performace of reproducible research through the application of quality control metrics and enable the reuse of data for purposes other than the original study. . The source of the datasets in this study is PRIDE and each dataset contains the ftp address from which it came.
+PRIDE is the online protein repository of the European Molecular Biology Laboratory (EMBL). It stands for The PRoteomics IDEntifications Archive database, and is a public data repository for mass spectrometry data. The goal of PRIDE is to support the performace of reproducible research through the application of quality control metrics and enable the reuse of data for purposes other than the original study. The source of the datasets in this study is PRIDE and each dataset contains the ftp address from which it came [@pride].
 
 ### FragPipe - NOT DONE YET
-FragPipe is a 
-Use the about page on the website
+FragPipe is a application designed to be a comprehensive computational platform for the analysis of mass spectrometry proteomics data. It functions as a graphical wrapper over several proteomics tools, such as MSFragger, IonQuant, DiaNN, and more. It provides a comprehensive list of workflows that combine the tools to turn multistep processes into a set up and run. FragPipe is open source, and under continuous development [@FragPipe].
 
 
 # Project Description
@@ -201,6 +200,7 @@ library(DBI)
 library(RPostgres)
 library(tidyr)
 library(dplyr)
+library(stringr)
 library(ggplot2)
 SIG_FIG <- 2
 con <- dbConnect(RPostgres::Postgres(), dbname = "antibodies")
@@ -218,7 +218,8 @@ peptides <- dbGetQuery(con, "select patients.patient_id, patients.disease_type, 
                        from proteins_small
                        left join patients
                        on proteins_small.patient = patients.patient_id")
-peptides_wide <- peptides |>
+head(peptides, 20)
+peptides_mutated <- peptides |>
   pivot_wider(
     id_cols = c(patient_id, disease_type, disease),
     names_from = gene,
@@ -235,14 +236,73 @@ peptides_wide <- peptides |>
     pct_igha2 = round(igha2 / total * 100, SIG_FIG),
     pct_ighd = round(ighd / total * 100, SIG_FIG),
     total_pct = rowSums(across(starts_with("pct_igh")), na.rm = TRUE)
+  ) |>
+  pivot_longer(
+    !c(patient_id, disease_type, disease),
+    names_to = "isotype",
+    values_to = "count"
   )
 # write.csv(peptides_wide, file = "peptides_wide.csv")
+peptides_pct <- peptides_mutated[grepl("pct_i", peptides_mutated$isotype),]
+
+head(peptides_pct, 20)
+
+ggplot(peptides_pct, aes(x = disease, y = count, color = isotype)) +
+  geom_boxplot()
 
 
+peptides_collapse <- peptides_pct |> # gather all the different ighg and igha into just ighg and igha
+  mutate(isotype = if_else(str_detect(isotype, "ighg"), "pct_ighg", isotype)) |>
+  mutate(isotype = if_else(str_detect(isotype, "igha"), "pct_igha", isotype)) |>
+  group_by(patient_id,disease_type, disease, isotype) |>
+  summarise(count = sum(count), .groups = "drop")
+
+head(peptides_collapse, 10)
+
+ggplot(peptides_collapse, aes(x = disease, y = count, color = isotype)) +
+  geom_boxplot() 
+```
+
+```{r}
+stats_pct <- peptides_pct |> # find the mean and standard deviation for each disease
+  group_by(disease_type, disease, isotype) |> 
+  summarise(mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE))
+
+head(stats_pct)
+
+ggplot(stats_pct, aes(x = disease, y = mean, color = isotype)) +
+  geom_point() +
+  labs(title = "Mean of all subtypes")
+
+ggplot(stats_pct, aes(x = isotype, y = mean, color = disease)) +
+  geom_point() +
+  labs(title = "Mean of all subtypes")
 ```
 
 
 
+```{r}
+stats_collapse <- peptides_collapse |> # find the mean and standard deviation for each disease
+  group_by(disease_type, disease, isotype) |>
+  summarise(num = length(count), mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE))
+
+head(stats_collapse)
+
+ggplot(stats_collapse, aes(x = disease, y = mean, color = isotype)) +
+  geom_point() +
+  labs(title = "Mean of collapsed isotypes")
+
+ggplot(stats_collapse, aes(x = isotype, y = mean, color = disease)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Mean of collapsed isotypes")
+```
+
+```{r}
+print(stats_collapse[order(stats_collapse$isotype, decreasing = TRUE),])
+
+#lm(peptides_collapse)
+```
 # Discussion
 
 
