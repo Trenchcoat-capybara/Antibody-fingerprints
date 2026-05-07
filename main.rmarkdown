@@ -1,0 +1,929 @@
+---
+title: |
+  "Statistical Analysis of Immunoglobin Isotype Fingerprints Across Afflictions " 
+  \newline
+  "Statistisk Analyse af immunoglobin Isotype Fingeraftryk for Forskellige Sygdome"
+author: "Jakob Gad Spoorendonk"
+date: 2026-05-05
+header-includes:
+  - \supervisors{Veit Stefan Schwämmle\protect\\ Xuan-Tung Trinh}
+bibliography: references.bib
+csl: ./styles/nature.csl
+execute:
+  echo: true
+  warning: true
+format:
+  pdf:
+    pdf-engine: xelatex
+    #cite-method: biblatex
+    toc: true
+    toc-depth: 4
+    toc-float: false
+    toc-title: "Contents"
+    include-in-header:
+      - text: |
+          \usepackage{tikz}
+          \usetikzlibrary{positioning, chains}
+          \usepackage{graphicx}
+          \graphicspath{{Pictures/}}
+      - file: preamble.tex
+---
+\newpage
+# Introduction
+
+## Humoral Immune response
+Humoral immunity is a part of the adaptive immune system, it is mainly mediated by the presence of antibodies. There are two main types of humoral immunity; T-dependent, and T-independent. T-independent immunity is triggered by the presence of an antigen that is recognized by the B-cell receptor (BCR), but cannot be recognized by the T helper cells. This leads to a humoral immune response dominated by IgM antibodies. T-dependent immunity occurs when a B-cell is able to uptake the antigen and present it to a T-helper cell on the B-cells major histocompatability complex (MHC), this allows the B-cell to undergo class-switch recombination to generate antibodies of other isotypes [@BasicImmunology].
+
+## Antibodies  
+Antibodies are proteins that make up a part of the adaptive immune system. They play a central role in the humoral immunity by attatching themselves to and marking recognized targets, to trigger various reactions. All human antibodies are heterodimers that are made up of two dimers of a light and a heavy chain pairing. Both chains contain a variable region. The light chain contains a single conserved region, while the heavy chain contains either 4 (IgM and IgE) or 3 (the rest) conserved regions, this depends on which isotype of antibody it is. Between the first conserved region - which is connected to the variable region - and the second conserved region, is a hinge region. Depending on the isotype, the hinge region can be longer or shorter controlling the flexibility of the antibody arms [@Kretschmer2017]. The different isotypes can interact with different groups of immune receptors, refered to as Fc receptors.
+The two arms of the antibody are refered to as Fragment antigen binding domains (Fabs), and the bottom connecting part is refered to as the Fragment crystallizeable (Fc). The variable region of both Fabs are identical, as they are made from the same light- and heavy-chain combination. The hinge region is found between these two parts. 
+
+```{=latex}
+\begin{figure}[!ht]
+\centering
+\includegraphics[height=10cm]{Antibodies_Kretschmer}
+\caption{Graphic overview of antibody architecture by Kreschmer et al.\ 2017 }
+\label{fig:antibody-overview}
+\end{figure}
+```
+
+
+### Variable Region
+The variable region of an antibody is contains of the N-terminal region of the light and heavy chains [@Chi2020]. This is the part of the antibody that react with an antigen to trigger the receptor complex [@Kretschmer2017]. The variability is generated in several ways and allows the body to produce antibodies that can quickly be made specific for any single sequence or molecule that may appear.
+
+
+### Constant Region
+The constant region of the heavy chain is what determines the isotype of the antibody. The isotype of the antibody decides which effector function the antibody will trigger when activated [@Stavnezer2008]. The function of an antibody is dependent on which immune receptors - usually named Fc_R_ which stands for "Fragment crystallizeable _type_ Receptor _number_", an example would be Fc$\gamma$RII which is Immunoglobin G receptor type 2. The Fc region decides which recpetors the antibody can interact with. As it is made up of the conserved part of the antibody, it is the conserved part of the heavy chain that decides which receptors an antibody can interacts with, and thereby which reactions it can trigger. The antibodies and their respective receptors function as the initiation receptor for the produced reaction [@Kretschmer2017]. 
+
+
+### Hinge Region
+The different isotypes and subtypes have different hinge regions. The hinge region of an antibody is found between the first and second constant regions of the heavy chain. The length and disulfide bond of the hinge region affect the flexibility and reach of the variable region. They also affects the affinity for Fc receptor binding and mediated effector functions [@Kretschmer2017]. The hinge region can be subdivided into three regions; upper hinge, core hinge and lower hinge. Each of the three regions play a different role. The upper hinge determines the flexibility and rotational capacity of the Fabs. The core region contains a varying number of cystein residues - this varies from subtype to subtype - these cysteins are utilised to stabilize and connect the heavy chains. The lower hinge region is used to bend the Fc region of the antibody which affects the angle at which the Fabs can be [@Chiu2019].
+
+## Variability - NOT DONE YET 
+B-cells have several ways to transform their antibodies, be it function or specificity. Function is mainly controlled by the Fc region which is made up of the heavy chain, while the variable region of both chains work together to decide what the antibody will attatch and react to.
+
+
+### Activation-induced cytidine deaminase (AID)
+Activation-induced cytidine deaminase is a protein with a central role in the adaptive immune system. It plays a central role in the processes of CSR and SHM which are central in the generation of variability. The main mechanism of AID is the controlled deamination of cystein in the variable region of the antibodies. When uracil is detected in DNA it triggers a doublestranded break in the DNA which is then repaired replacing uracil with cystein, as it originally was [@Chi2020]. AID indirectly contribute to the DNA changeing from break to break, by suppressing the normal pathways that the cell would use to repair these kinds of DNA damage. This suppression forces the cell to repair the DNA imperfectly leading to mistakes which contribute to the variation in the cells variable region [@Anvari2018].
+
+
+
+#### Somatic Hyper Mutation (SHM)
+Somatic hyper mutation is a way for the B-cell to insert, delete, and swap bases between generations. It mainly occurs in the variable region of the DNA where it causes minor changes in the DNA making up the variable region, thereby increasing the number of potential combinations that can be created [@Chi2020]. Higher affinity mutations are selected for further mitosis, this causes the next generation of antibody producing B-cells to produce antibodies of higher affinity [@Victora2010].
+
+
+#### Class Switch Recombination (CSR)
+Class switch recombination is the process by which B-cells change the constant region of the heavy chain of the antibodies they produce. This is done by splicing different parts of the DNA together, cutting out the middle from the splicing [@Liu2024]. This makes it impossible for the transformation to go backwards, as the DNA is not there.
+Even though there is no mutation during CSR, AID is necessary for triggering the double strand breaks for recombining the DNA. CSR occurs by breaking two switch regions in the DNA, it is between these two regions that the DNA is removed and recombined to allow for the production of another isotype of antibody [@Liu2024]. With the excision of only some DNA it allows the downstream B-cell generations to perform further CSRs for further adaptation.
+Class switching requires several
+
+### V(D)J Recombination
+The variability of the variable region comes partially from V(D)J Recombination. V(D)J Recombination is different between the variable regions of the heavy chain and light chain. On the heavy chain it involves all three segments the V(ariable), D(diverse), and J(joining) segments, the light chain only has the V and J segments. By combining multiple different V and J segments it is possible to generate several different combinations [@Chi2020]. By combining these basic forms with inserted bases from SHM it is possible for the immunne system to reach a high level of starting diversity for affinity maturation to improve upon.
+
+
+## Isotypes
+The different isotypes differ structually in various ways, not just in their length but also in their glycosylation and their cystein placement. It is these structural differences that the body uses to selectively interact with the individual antibodies to mediate which reaction is triggered by which isotype [@Kretschmer2017].
+
+
+### IgM
+IgM is the default isotype of mature B-cells. It contains 4 conserved regions, and in the blood they form pentamers. They are the best activators of the complement system. IgM can be produced without being exposed to antigenic stimuli, but they can also be produced against invading pathogens [@Kretschmer2017]. It serves as the primary defense against early pathogen invasions, before adaptive immunity has been activated [@Chi2020].  
+
+Early Immune resposes are generally characterised by a rise in antigen-specific IgM, which is then followed by affinity maturation, and then followed by isotype switching. This gives rise to antibodies that are specialised in combating that specific ilness, therby increasing the likelyhood of survival for the host. IgM tends to have a lower antigen-binding affinity than the other isotypes, in nature this is compensated for by being the only antibody to naturally be able to target molecules other than proteins [@Boes2000]. This is because in order to class-switch it is necessary for the B-cell to react to an antigen that can be recognized by the MHC II receptor on the folicular T-cell, which can only recognize proteins. Clinically humans have overcome this by attatching proteins to molecules of interest, thereby allowing the Tfh-cells to induce class switch on B-cells that are not protein specific [@BasicImmunology]
+
+### IgD - NOT DONE YET
+IgD is the other type of immunoglobin that is produced by naive B-cells [@Stavnezer2008]. It is believed to have arisen evolutionarily slightly after IgM, and is preserved from fish to humans. This kind of preservation would indicate that it is necessary for the survival of the organism. The maturation of B-cells is characterized by progressive up-regulation of IgD receptors. B-cells that purely express IgD are anergic B-cells and tend to exist in the perepheri parts of the body, but interestingly not in the intestine [@Gutzeit2018]. This may be due to the presence of the intestinal microfauna, but if IgD were a danger to the commensal microbes there should be a similar situation for IgA antibodies, which are the main excretory antibodies.
+
+
+### BCR - ADD section
+The B-cell receptor is a membrane bound receptor that is constructed using antibodies. THe development of the B-cell receptor has been linked to the maturation of the host B-cell. It is the receptor that is responsible for the activation and proliferation of the B-cell. 
+
+An antibody that is used as a BCR is refered to as a mIg (membrane bound immunoglobin). It is differentiated from the soluble antibodies by a short anchor on the Fc end that connects the immunoglobin to the membrane. The short anchor domain itself cannot be used to 
+
+There are several theories about how this one receptor can fill so many  
+
+### IgG
+IgG antibodies come in four subtypes, IgG1, IgG2, IgG3, and IgG4. The subtypes are numberd in order of decreasing abundance. All four subtypes can be transcribed by the G class B-cells. The different subtypes have different affinity for different receptors of the Fcγ family. Through the different affinities they fulfil different purposes in the immune system. With the exception of FcγRIIb, all of the FcγR receptors mediate activating functions [@Kapur2014].
+
+#### IgG1
+IgG1 is the bodys response to soluble proteins and membrane proteins. They are the most abundant of the IgG antibodies, and are often encountered together with the other IgG subtypes, especially IgG3 and IgG4 [@Vidarsson2014]. IgG1 is able to cross-link and react with all of the different FcγR receptors [@Kapur2014]. 
+
+#### IgG2
+IgGs reaction to bacterial capsular polysaccharides is almost completely made up of IgG2 antibodies [@Vidarsson2014]. IgG2 mainly triggers receptors on neutrophiles, it might also be able to trigger receptors on NK cells and some macrophages [@Kapur2014]. This would lower the scope of the reaction, triggering only the necessary cells for fighting the bacterial infection. Therefore no antibodies are wasted on other activities, leading to an improved immune response.
+
+#### IgG3
+IgG3 is the antibody with the longest hinge domain, counting up to 62 amino acids in length. It also has the highest affinity for C1q which makes it the best IgG to trigger the complement system. It does have the shortest halflife amongst the long lived IgGs. Just like IgG1 it can interact with all of the FcγR [@Kapur2014].
+
+#### IgG4
+IgG4 is an antibody that is often formed following repeated non-infectious exposure. It is linked to downregulation of immune reaction towards the antigen and is usually seen correlating with sucessful immunotherapy [@Vidarsson2014].
+
+### IgA
+IgA is the most produced antibody isotype in the body, it is the second most prominent antibody in the blood. More IgA is produced in total than all the other isotypes combined. It is encountered in all mammals and birds. Most IgA is secreted out of the body, usually in the form of SIgA, which forms a dimer outside of the body, and sometimes even a tetramer. IgA comes in two major subtypes, IgA1 and IgA2. An obvious difference between the two subtypes, is the length of their hinge regions. THe significantly longer hinge region of IgA1 makes the arms with the variable region significantly more flexible [@Sousa-Pereira2019].  
+
+
+### IgE
+IgE is the antibody type mainly associated with allergic and parasitic diseases. It mainly interacts with receptors on most cells, basophils, monocytes and macrophages, with some other immune cells carrying lower affinity receptors. When a antibody-receptor complex is triggered the triggerd cells degranulate completely, this degranulatinon triggers high levels of inflammation and cascading reactions [@Kretschmer2017]. The relatively higher affinity of IgE receptors drastically lowers the amount of IgE that is freely found in blood serum.  
+
+IgE is the least abundant antibody in the blood. This is probably partially due to the lower life lifespan when unbound, which is 1.5 days [@Gutzeit2018], and the fact that it is produced in response to parasites, which are more rare than microbial lifeforms. In some individuals IgE antibodies are produced as a response to harmless antigens, this failure can lead to the symptoms of allergy [@Anvari2018]. Perhaps the growing prevalence of allergy is due to the lower variation in IgE leading to an increased amount of Mast cells being triggered by a single harmless antigen.
+
+
+## Proteomics
+Proteomics is the study of a large amount of proteins from the same source. It allows for the answering of questions in relation to the abundance, localisation, interactions, modification states, and folding of proteins. Proteiomics comes in two main types, bottom-up and top-down. In bottom-up proteomics an overall picture of the protein abundance is created and then further studied in order to get an overviw of the situation, and find out how the different proteins play together. Top-down proteomics [@McArdle2021].
+
+### Mass Spectrometry
+Mass Spectrometry is how proteomics data is acquired, there are several types of mass spectrometry and the data has to be treated in different ways depending on which is used. Mass spectrometry is performed using a Mass Spectrometer, of which there are several kinds. It is becoming increasingly normal to run subsequent mass spectrometers, refered to as tandem mass spectrometry, in order to first analyse the precursors and then fragment them for further analysis.
+
+
+#### Bottom-up Proteomics
+There are two major categories of mass spectrometry in the field of proteomics, Top-down proteomics (TDP), and Bottom-up proteomics (BUP). Bottom-up proteomics (BUP) is the analysis of proteins that have been proteolysed by enzymes [@roberts2024]. The goal of of BUP is the efficient, consistent, and effective extraction and digestion of proteome samples for analysis. The general workflow of BUP is made up of; protein extraction, followed by hydrolysis, Reversed-phase liquid chromatography (RPLC), ionization, and then finally mass spectrometry. Depending on circumstances, various changes can be made to this flow to fit whatever criteria that are necessary [@jiang2024].
+
+
+#### Top-down Proteomics
+The major difference between BUP and TDP is whether the proteome of interest in predigested or not. The predigestion changes the difficulty of answering different questions. The digestion of proteins that is characteristic of BUP has the side effect of making it hard to analyse the post-translational modifications of the proteins, which are important for their functions. There are of course also challenges to using TDP, some of them are the need for both accurate intact molecular mass measurement(top) and controlled fragmentation during the gas-phase [@roberts2024].
+
+
+
+#### DDA Mass Spectrometry
+Data-dependent acquisition (DDA) is a form of tandem mass spectrometry. It functions by selecting the most abundant precursor ions detected by MS1 survet and then scan them after fragmentation [@Ahmed2025]. One of the problems with DDA is that it has a bias towards stronger signals, that makes it harder to reproduce quantification of low-abundance peptides [@Doerr2015]. One attempt to solve this issue was the usage of dynamic exclusion settings, which mitigates the problem to some extent. But this is an inherent flaw with DDA and has lead to the creation of new techniques like DIA mass spectrometry [@Ahmed2025].
+
+#### DIA Mass Spectrometry
+Data-independent acquisition (DIA) is the newer approach to data acquisition [@Doerr2015]. It tries to solve the bias issue of DDA by using a different approach. DIA allows for the isolation and fragmentation of all the acquired precursors, by cycling through predefined _m/z_ windows across a preset range [@Ahmed2025]. This eliminates the bias by making each precursor the largest in its cycle and therefore allowing the identical treatment for the different precursors regardless of abundance.
+
+ 
+#### Labeling - NOT DONE YET
+When analysing samples it is important to know if and how the samples are labeled. Labeling samples makes it possible to run them together. This decreases the potential for technically induced bias caused by running the samples seperately. It does also add the extra step of labeling the samples, and if it isn't done correctly that can also affect the outcome of the experiment. Two types of labeling are; stable isotope labeling, and isobaric tag labeling [@jiang2024].
+
+Stable isotope labeling rely on feeding the sample with stable isotopes of the atoms it uses, generally carbon. This produces peptides that are chemically identical while having a slightly different mass [@jiang2024]. The obvious downside of this method is the labeling process itself, it works for microbes, but is probably impossible to perform at scale with anything larger. And the isotopes are expensive to produce and procure.
+
+Isobaric tag labeling is another approach to running several samples at once. There are various methods of performing isobaric tag labeling, but the basic idea is to attatch a molecule to each peptide to make it possible to find the relative intensity between the differently labeled peptides.
+
+
+### Datasource - PRIDE - NOT DONE YET
+PRIDE is the online protein repository of the European Molecular Biology Laboratory (EMBL). It stands for The PRoteomics IDEntifications Archive database, and is a public data repository for mass spectrometry data. The goal of PRIDE is to support the performace of reproducible research through the application of quality control metrics and enable the reuse of data for purposes other than the original study. The source of the datasets in this study is PRIDE and each dataset contains the ftp address from which it came [@pride].
+
+### FragPipe
+FragPipe is a application designed to be a comprehensive computational platform for the analysis of mass spectrometry proteomics data. It functions as a wrapper over several proteomics tools, such as M, IonQuant, DiaNN, and more. It provides a comprehensive list of workflows that combine the tools to turn multistep processes into a set up and run. The analysed data is generally turned into spectral libraries which are easy to work with for future analysis. FragPipe is developed and maintained by Nesvilab. it is open source, and under continuous development. FragPipe documentation can be found at the url https://fragpipe.nesvilab.org/, which is made with github pages and is sourced from the https://github.com/Nesvilab/FragPipe.git github repo [@FragPipe].
+
+### DIA-NN 
+Data-independent acquisition Neural Network, is the main tool used by FragPipe to analyse DIA data. It uses deep neural networks to solve one of the largets issues with DIA mass spectrometry, the analysis of the data. As data is not aquired in one round, but rather through cycling it loses the context window that makes it easy to analyse the data. With no baseline DIA data is hard to analyse and peaks can be confused for several precursors at once, as there are several corresponding spectrums. The neural networks are used to distinguish real signals from noise, it combines those predictive capacities with at the time of creation new quantification and interference-correction methods [@Demichev2020].
+
+When it starts it uses a selection of precursor ions to build a spectral library which is used as a foundation for future quantification of the peaks. It then generates a negative control library from the decoy precursor information, and uses that to identify potential peaks that should overlap between the decoy and the real data. After the preparatory work it then procedes to evaluate every elution peak with a set of scores that describes the peaks characteristics, while comparing with the generated spectral library. It then evaluates the degree of interference between the precursors with similar retention time, and if the interference is significant enough to take into account. Then it keeps the ones that have the least interference, this has been found to increase the strict false discovery rate (FDR). One of the most important steps in the workflow is that it assigns statistical significance to the identified precursors, in the form of q-values. The q-values are calculated by assigning a discriminant score based on the potential characterisations of the elution peaks. The program then uses the trained neural network to distingush between the decoys and the actual peaks. It then proceeds to select the most likely fragment based on the level of interference and best correlation [@Demichev2020].
+
+
+
+## This Study - NOT DONE YET
+This project is a continuation of the study "Data mining antibody sequences for database searching in bottom-up proteomics" which was focused on the isotype distribution of B-cells recorded in the Open Antibody Space. The original study was interested in the variable chain of the antibodies with the goal of creating an antibody database to support the discovery of unregistered antibodies [@Trinh2024]. Unlike the original this study is focused on the distribution of the variation in the Fc part of the antibody.
+
+# Project Description
+
+## Introduction and Background
+Antibodies are proteins that bind antigens, in humans they come in 5 different isotypes. Each isotype fills a different role in the immune system. As different isotypes fulfil different roles in the immune system, different diseases should have different isotype fingerprint.
+
+It is expected that different categories of diseases with different attack mechanisms will trigger different reactions from the immune system, including provoking the creation of different isotype fingerprints. These fingerprints should be able to tell us about the disease, and how the body fights it. By understanding the body’s general reaction it will be possible to plan personalized treatment.
+
+With the help of proteomic methodology, it is possible to map the relative concentrations of antibodies from blood samples. By modifying proteomics data analysis workflows like FragPipe to run with specifically designed databases, it will be possible to measure the relative antibody isotype distributions and provide in-depth antibody profiling. 
+
+A main case to look into are the differences between the isotype profiles of allergies (hyperimmune reactions) where there is expected to be an increase in IgE, and the profile of a bacterial infection, which is expected to have a higher concentration of IgG. If the general fingerprint of the disease can be well characterized via analysis of public proteomics data, this will open the door for diagnosis via antibody profiling with high analytic depth coming from the high sensitivity of common bottom-up mass spectrometry experiments. .
+
+This project will build on a prior ISA project where we investigated antibody isotype distributions in genomic data, and found a marked increase in presence of IgD producing B-cells in allergic reactions, which was more noticeable than the increase in IgE, which should be the main reaction. We therefore see the need to characterize these patterns directly on protein level, thus on the presence of actually expressed antibodies.
+
+
+
+## Aim of the Project
+The aim of the project is to perform peptide analysis on databases to compare isotype fingerprint between different categories of diseases, such as viral, autoimmune, and whatever else can be found. Healthy individuals will be used as a control group.
+
+
+## Methods and Experimental Design
+We will check repositories like PRIDE to see if they contain any mass spectra that are suitable for the project, such as serum measurements of sick patients. We will re analyse the identified raw data using fragpipe, with a focus on antibody isotypes. The goal is to create an overview of isotype distribution for further analysis.
+
+After gathering the isotype data, we will profile the databases and perform statistical comparison between the different diseases. Theoretically the potentially high variability of isotypes will average out on isotype level by increasing the sample size.
+
+If possible we will then also look for disease specific biomarker peptides that could affect the antibody profile. Once that has been done we can train some simple machine learning models, such as random forest.
+
+Antibody profiling will allow us to better understand the immune response to diseases and potentially identify new mechanisms for future treatments. Another potential end goal would be the optimization of vaccine adjuvants to design the optimal antibody profile with the vaccines, to avoid allergic reactions and stimulate the generation of the most effective isotype profiles. 
+
+
+# Method - NOT DONE YET
+
+## Data Collection
+Data was gathered from the PRIDE repository. The goal was to gather datasets of serum samples, from as many differnet diseases as possible. First ChatGPT was asked for serum samples from various diseases, it forgot partway through the conversation that it was supposed to give serum samples, and it wasn't very thorough with the list it created. After having processed the datasets that the chatbot had found, another attempt was made with claude, which produced a python code for questioning the pride api, plus keywords. Finally a brute force search was conducted going through all entries on pride that had organism "homo sapien" and organism part as one of the following; "blood serum, blood, or blood plasma. The datasets with promising names were written down in a document which can be found on the project github as /pride_repository/chat_databases.md 
+
+The next step was to look through the article related to the datasets of interest to find the parameters to use for FragPipe analysis, and to see if there were any issues with the dataset in relation to the project itself. This aimed to remove the datasets where there were issue for the study. The datasets where there was a need to guess which dataset belonged to control and which was of interest. The datasets where antibodies were removed fo increase the clarity of other proteins. The datasets that were targeting something even more specific in the blood or serum.
+
+The chosen dataset was decompressed with a dockerised version of proteowizard using the msconvert tool. The main tags of interest was peakPicking and compression. They were then transfered to the cloud computer where they were analysed using 4 cores of with 6 gb of memory each. 
+
+## Data Treatment
+After the datasets were verified, the few that had all the information needed, a proper separation of samples noted, without any antibodies removed, and not targeting something irrelevant in the blood, were ran through FragPipe, using the DIA_SpecLib_Quant workflow, which leans on the DIA-NN software. 
+
+The spectral libraries were aggregated (with csvstack from csvkit) the different patients into a single csv. After that the aggregated csv was inserted into postgres by using the csvsql function of csvkit. The files were then loaded using the DBI Rpackage, using the file name 
+
+The main data of interest in the output was the PG.Quantity values and their pairing to different isotypes. Each patient had several entries for each of the isotypes, so each of the isotypes was summed into a single value for each isotype per patient. In order to prepare the data for visualization, and to make it comparable across samples, the values were turned into percentages. They were then turned into two sets of data, one with all of the subtypes, and one with the subtypes summed up to represent the distribution between isotypes only.
+
+
+## Data Visualization and Statistics
+Data visualization was performed with R using the ggplot2 package. The goal was originally to compare the distribution of isotypes accross different disease categories, but due to a lack of usable data some compromises had to be made, and only two disease which share a type were used. Statistical analysis was performed using the diseases as different groups, and on them after grouping by disease vector. The main statistical test was ANOVA as it was a comparison across groups. 
+
+
+
+
+
+```{=latex}
+\begin{figure}[htbp]
+\tikzset{
+  block/.style = {
+    rectangle, 
+    draw, 
+    text width=10em, 
+    text centered, 
+    rounded corners, 
+    minimum height=3em
+  }
+}
+
+\begin{tikzpicture}
+[node distance = 5cm,
+start chain=going below,]
+\node (n1) at (0,0) [block] {\includegraphics*[height=2.5em]{PRIDE}};
+\node (n2) [block, right of=n1] {\includegraphics*[height=2.5em]{FragPipe}};
+\node (n3) [block, right of=n2] {\includegraphics*[height=2.5em]{Csvkit}};
+\node (n4) [block, below of=n1, yshift =2cm] {\includegraphics*[height=2.5em]{PostgreSQL}};
+\node (n5) [block, right of=n4] {\includegraphics*[height=2.5em]{DBI}};
+\node (n6) [block, right of=n5] {\includegraphics*[height=2.5em]{R}};
+
+\draw [->] (n1) -- (n2);
+\draw [->] (n2) -- (n3);
+\draw [thick,->] (n3) -- (n4);
+\draw [->] (n4) -- (n5);
+\draw [->] (n5) -- (n6);
+\end{tikzpicture}
+\caption{Overview of the workflow. Start by searching PRIDE for datasets. Run the datasets through FragPipe. Use csvkit to merge the outputs into a single table that can be used, and put into postgres. Use Postgres for data management and DBI to interact with it in R. Do the statistical work in R.}
+\label{fig:antibody-overview}
+\end{figure}
+```
+
+
+```{r}
+#| echo: false
+#| output: false
+#| label: import data and libraries
+library(DBI)
+library(RPostgres)
+library(tidyr)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+library(patchwork)
+SIG_FIG <- 2
+disease_colors <- c(Control = "#1f77b4", 
+                    Viral = "#ff7f0e", 
+                    Covid = "#ff7f0e", 
+                    Monkey_Pox = "#2ca02c", 
+                    IGHG1 = "#1f77b4", 
+                    IGHG2 = "#ff7f0e", 
+                    IGHG3 = "#40a02b", 
+                    IGHG4 = "#d62728", 
+                    IGHA1 = "#9467bd", 
+                    IGHA2 = "#8c564b", 
+                    IGHD = "#e377c2", 
+                    IGHM = "#7f7f7f", 
+                    IGHG = "#1f77b4", 
+                    IGHA = "#9467bd",
+                    PCT_IGHG1 = "#1f77b4", 
+                    PCT_IGHG2 = "#ff7f0e", 
+                    PCT_IGHG3 = "#40a02b", 
+                    PCT_IGHG4 = "#d62728", 
+                    PCT_IGHA1 = "#9467bd", 
+                    PCT_IGHA2 = "#8c564b", 
+                    PCT_IGHD = "#e377c2", 
+                    PCT_IGHM = "#7f7f7f", 
+                    PCT_IGHG = "#1f77b4", 
+                    PCT_IGHA = "#9467bd")
+con <- dbConnect(RPostgres::Postgres(), dbname = "antibodies") 
+# The SQL query is being used to access the data that is in the dataset/dia folder, i stacked the files in that folder using the csvstack tool which is the data I used, but that file is too big for github, In order to get earlier code to slot in nicely I changed some names. 
+# each had a patient_id, I used unique file names to assign that, as each patient had their own file
+# I used the file name to assign a disease name, the precise name is used in the code
+# I have them grouped in folders during analysis which I use to categorise them
+# Changed PG.Quantity to total_peptides, as that fit in with an earlier attempt
+peptides <- dbGetQuery(con, " 
+SELECT 
+  DENSE_RANK() OVER (ORDER BY \"File.Name\") AS patient_id,
+  \"Genes\" AS isotype,
+  CASE
+    WHEN \"File.Name\" ILIKE '%ctr%' Then 'Control'
+    WHEN \"File.Name\" ILIKE '%covid%' THEN 'Covid'
+    WHEN \"File.Name\" ILIKE '%monkey%' THEN 'Monkey_Pox'
+  END AS disease,
+  CASE
+    WHEN \"File.Name\" ILIKE '%control%' THEN 'Control'
+    WHEN \"File.Name\" ILIKE '%Viral%' THEN 'Viral'
+  END AS disease_type,
+  \"PG.Quantity\" AS total_peptides
+FROM dia
+WHERE \"Protein.Ids\" = 'P01871'
+  OR \"Protein.Ids\" = 'P01880'
+  OR \"Protein.Ids\" = 'P01854'
+  OR \"Protein.Ids\" = 'P01876'
+  OR \"Protein.Ids\" = 'P01877'
+  OR \"Protein.Ids\" = 'P01857'
+  OR \"Protein.Ids\" = 'P01859'
+  OR \"Protein.Ids\" = 'P01860'
+  OR \"Protein.Ids\" = 'P01861';
+                       ")
+```
+
+
+
+```{r}
+#| echo: false
+#| output: false
+#| label: normalize data
+peptides_mutated <- peptides |>
+  group_by(patient_id, isotype, disease, disease_type) |>
+  summarise(total_peptides = sum(total_peptides)) |>
+  pivot_wider(
+    id_cols = c(patient_id, disease_type, disease),
+    names_from = isotype,
+    values_from = total_peptides
+  ) |>
+  mutate(
+    total = rowSums(across(starts_with("IGH")), na.rm = TRUE),
+    PCT_IGHG1 = round(IGHG1 / total * 100, SIG_FIG),
+    PCT_IGHG2 = round(IGHG2 / total * 100, SIG_FIG),
+    PCT_IGHG3 = round(IGHG3 / total * 100, SIG_FIG),
+    PCT_IGHG4 = round(IGHG4 / total * 100, SIG_FIG),
+    PCT_IGHM = round(IGHM / total * 100, SIG_FIG),
+    PCT_IGHA1 = round(IGHA1 / total * 100, SIG_FIG),
+    PCT_IGHA2 = round(IGHA2 / total * 100, SIG_FIG),
+    PCT_IGHD = round(IGHD / total * 100, SIG_FIG),
+    total_pct = rowSums(across(starts_with("PCT_IGH")), na.rm = TRUE)
+  )  |>
+  pivot_longer(
+    !c(patient_id, disease_type, disease),
+    names_to = "isotype",
+    values_to = "count"
+  )
+#write.csv(peptides_mutated, file = "peptides_wide.csv")
+peptides_pct <- peptides_mutated[grepl("PCT_I", peptides_mutated$isotype),]
+
+peptides_collapse <- peptides_pct |> # gather all the different ighg and igha into just ighg and igha
+  mutate(isotype = if_else(str_detect(isotype, "IGHG"), "PCT_IGHG", isotype)) |>
+  mutate(isotype = if_else(str_detect(isotype, "IGHA"), "PCT_IGHA", isotype)) |>
+  group_by(patient_id,disease_type, disease, isotype) |>
+  summarise(count = sum(count), .groups = "drop")
+```
+
+
+# Results
+## Distribution of the Data
+
+The data that I was able to analyse was from the study "The human host response to monkeypox infection: a proteomic case series study". The study contained the following distribution of patients, and each patient had entries for the following unique isotype.
+```{r}
+#| echo: false
+#| label: Distribution of data graphs
+#| fig-cap: Distribution of disease and antibody isotypes across the datasets. (A) The number of patients of each type in the dataset. (B) The number of patients where the peptide was registered.
+#| fig-width: 10
+#| fig-height: 5
+peptides_wide <- peptides |>
+  group_by(patient_id, isotype, disease, disease_type) |>
+  summarise(total_peptides = sum(total_peptides)) |>
+  pivot_wider(
+    id_cols = c(patient_id, disease_type, disease),
+    names_from = isotype,
+    values_from = total_peptides
+  ) 
+
+peptides_count <- peptides |>
+  group_by(patient_id, isotype, disease, disease_type) |>
+  summarise(total_peptides = sum(total_peptides)) |>
+  pivot_wider(
+    id_cols = c(patient_id, disease_type, disease),
+    names_from = isotype,
+    values_from = total_peptides
+  ) |>
+  pivot_longer(
+    !c(patient_id, disease_type, disease),
+    names_to = "isotype",
+    values_to = "count"
+  )
+
+disease_table <- table(peptides_wide$disease)
+peptides_table <- table(peptides_count$isotype[!is.na(peptides_pct$count)])# the distribution of isotype subtypes
+
+disease_table_plot <- as.data.frame(disease_table)
+colnames(disease_table_plot) <- c("disease", "count")
+peptides_table_plot <- as.data.frame(peptides_table)
+colnames(peptides_table_plot) <- c("isotype", "count")
+
+table_1 <- ggplot(disease_table_plot, aes(x = disease, y = count, fill = disease)) +
+  geom_col() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = disease_colors)
+table_2 <- ggplot(peptides_table_plot, aes(x = count, y = isotype, fill = isotype)) +
+  geom_col() +
+  labs(x = "number of samples with",
+       y = "Isotype") +
+  theme(legend.position = "none")+
+  scale_fill_manual(values = disease_colors)
+
+table_1 + table_2 + 
+  plot_annotation(tag_levels = 'A')
+```
+
+There are more control samples than either of the disease
+It is interesting to note that there is not a single count of IgE, and the only isotype that is partially represented is IgD. The lack og IgE can be explained by the nature of IgE, but is there a reason for the lack of IgD.
+
+IgE is the antibody with the lowest natural concentration in the blood. On top of that, it has the receptor with the highest affinity. That might be the reason that it wasn't present in a single sample, even though it was data collected with DIA methodology, which should be more sensitive to diverse low-quantity proteins. Another interesting reason may be that the patients in this data are from Britain. As IgE is a response to parasites, the historically improved sanitations - especially the separation of drinking water and excretion - has lowered the average level of IgE in the people of Britain.
+
+IgD is generally produced in the peripheries which would mean that the source of the blood would have an effect on the concentration of IgD. Considering that the normal place to take blood from is the arm, which is far away from where IgD is produced, it may have an effect on the concentration of the IgD.
+
+
+
+```{r}
+#| echo: false
+#| fig-cap: "temp"
+ggplot(peptides_pct, aes(x = disease, y = count, color = isotype)) +
+  geom_boxplot() +
+  labs(title = "by disease",
+       x = "count%" ) +
+  scale_color_manual(values = disease_colors)
+
+```
+As can be seen, there is a very low amount of IgD in the samples, this could be why there are so many IgDs that are not recorded. This would overlap with the plausible reason that the IgE has not been found.
+
+Another thing of interest is the Covid IgG1. Based on the boxplot shape, there seems to be 2 extreme outliers. This could just be because there are only 10 samples in the study, meaning that it is easy for there to be a section where there weren't any reads, leading to them being classified as outliers. It would appear based on the graphs that the IgG1 outliers of Covid would fit in with the monkeypox values, this could make sense as both diseases are very similar, and should therefore bring forth a similar reaction from the immune system.
+
+
+## Comparing means across diseases
+In order to get a better understanding of the differences in between the diseases and the control the means were calculated and plotted.
+```{r}
+#| echo: false
+#| label: plotting the means in results
+#| fig-cap: "Comparison of mean percentage of the distribution of antibody isotypes across "
+#| fig-width: 10
+#| fig-height: 5
+stats_pct <- peptides_pct |> # find the mean and standard deviation for each disease
+  group_by(disease_type, disease, isotype) |> 
+  summarise(mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE))
+
+stats_pct_type <- peptides_pct |> # find the mean and standard deviation for each disease
+  group_by(disease_type, isotype) |> 
+  summarise(mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE))
+
+p1 <- ggplot(stats_pct, aes(x = isotype, y = mean, color = disease)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Mean of disease by all subtypes") +
+  scale_color_manual(values = disease_colors)
+
+
+p2 <- ggplot(stats_pct_type, aes(x = isotype, y = mean, color = disease_type)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(title = "Mean of disease by all subtypes") +
+  scale_color_manual(values = disease_colors)
+
+
+p1 + p2 +
+  plot_annotation(tag_levels = 'A')
+```
+With the overlapping differences in values between the control samples and the disease, there is a good chance that having the two disease separate will affect the statistical tests. This is predictable, as in the original study, they chose Covid as a comparison to their monkeypox cases due to the similarity between the two diseases. This could indicate that the idea to check isotype-fingerprints on a per disease type basis rather than on a per disease basis may be the more correct approach.
+
+A quick look at the Isotypes show that the isotypes of most interest are IgG1 and IgG3. So statistical analysis will be performed on those two going forward. Due to the divergences being in IgG1 and IgG3, which are both IgG subtypes, it makes no sense to collapse the subtypes into their supertypes and analyse on that layer.
+
+## Analysis of vector
+If the Covid and monkeypox are supposed to be treated as one group it should be relatively visible on a graph, In theory if they were one group then the samples should be distributed around a central mean in something approximating a normal distribution. As there are not a lot of samples there was very little to see, but there was once more a differerence from the control samples.
+```{r}
+#| echo: false
+#| label: Are the samples normally distributed
+#| fig-cap: "A collection of graphs visualising the distribution of patients percentages of the isotypes of interest. (A) and (B) are graphs containing all of the samples"
+#| fig-width: 10
+#| fig-height: 5
+#| warning: true
+peptides_pct_ig1 <- peptides_pct[peptides_pct$isotype == "PCT_IGHG1",]
+peptides_pct_ig3 <- peptides_pct[peptides_pct$isotype == "PCT_IGHG3",]
+
+peptides_viral <- peptides_pct[peptides_pct$disease_type == "Viral",]
+peptides_viral_ig1 <- peptides_viral[peptides_viral$isotype == "PCT_IGHG1",]
+peptides_viral_ig3 <- peptides_viral[peptides_viral$isotype == "PCT_IGHG3",]
+
+p1 <- ggplot(peptides_pct_ig1, aes(x = count, after_stat(density))) +
+  geom_histogram(aes(fill = disease)) +
+  geom_density(color = "red", linewidth = 1)  +
+  labs(title = "IgG1 By disease",
+    x = "isotype percentage" ) +
+  xlim(0, NA) +
+  scale_fill_manual(values = disease_colors)
+
+p2 <- ggplot(peptides_pct_ig3, aes(x = count, after_stat(density))) +
+  geom_histogram(aes(fill = disease))  +
+  geom_density(color = "red", linewidth = 1)  +
+  xlim(0, NA) +
+  labs(title = "IgG3 By disease",
+    x = "isotype percentage" ) +
+  scale_fill_manual(values = disease_colors)
+
+
+
+p3 <- ggplot(peptides_viral_ig1, aes(x = count, after_stat(density))) +
+  geom_histogram(aes(fill = disease)) +
+  geom_density(color = "red", linewidth = 1)  +
+  labs(title = "IgG1 no control",
+    x = "isotype percentage" ) +
+  scale_fill_manual(values = disease_colors)
+
+
+p4 <- ggplot(peptides_viral_ig3, aes(x = count, after_stat(density))) +
+  geom_histogram(aes(fill = disease)) +
+  geom_density(color = "red", linewidth = 1)  +
+  labs(title = "IgG3 no control",
+    x = "isotype percentage" ) +
+  scale_fill_manual(values = disease_colors)
+
+
+(p1 + p2) / (p3 + p4) + plot_layout(guides = "collect") + theme(legend.position = "bottom") + plot_annotation(tag_levels = "A")
+```
+There appear to somekind of relationship, but there are too few samples to say from a graph, it is therefore necessary to perform some statistical tests to see if the two viral samples should be counted separately. The control sample density grapths show two small bumps, this is another potential indicator that there are two sets here, Control and Viral. 
+
+## Statistical Comparison of Viral Diseases
+There are a couple of statistical tests that can be used to detect of there are differences between two groups. The most basic is to do perform an ANOVA test, comparing within group variation and between group variation.
+
+```{r}
+#| echo: false
+#| warning: false
+peptides_para_viral <- peptides_pct[peptides_pct$disease_type == "Viral",] |>
+  group_by(disease_type, isotype) |>
+  summarise(n = length(count), mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE), var = var(count, na.rm = TRUE)) |>
+  rename(disease = disease_type)
+
+peptides_para <- peptides_pct |>
+  group_by(disease, isotype) |>
+  summarise(n = length(count), mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE), var = var(count, na.rm = TRUE))
+
+pep_para <- rbind(peptides_para_viral[peptides_para_viral$isotype == "PCT_IGHG1",],
+                  peptides_para[peptides_para$isotype == "PCT_IGHG1",],
+                  peptides_para_viral[peptides_para_viral$isotype == "PCT_IGHG3",],
+                  peptides_para[peptides_para$isotype == "PCT_IGHG3",])
+arrange(pep_para, disease)
+```
+
+While the table shows that the means of the respective IgG1 and IgG3 concentrations of Covid and Monkey pox are closer to each other than either of them are to the control sample, it doesn't really tell us if these are the same sample group or different.
+
+
+
+```{r}
+#| echo: false
+#| label: Viral comparison
+#| fig-cap: "Visuallization of the overlap of covid and monkeypox datapoints"
+#| fig-width: 10
+#| fig-height: 5
+p1 <- ggplot(peptides_viral_ig1, aes(x = disease, y = count, color = isotype)) +
+  geom_point() +
+  geom_hline(yintercept = mean(peptides_viral_ig1$count), linetype = "dotted") +
+  stat_summary(fun = "mean",
+               geom = "crossbar", 
+               aes(group = disease, color = disease), 
+               linewidth = 0.2,
+               width = 0.5) +
+  labs(title = "IgG1") +
+  theme(legend.position = "none") +
+  scale_color_manual(values = disease_colors)
+p2 <- ggplot(peptides_viral_ig1, aes(x = disease_type, y = count)) +
+  geom_point(aes(color = disease)) +
+  stat_summary(fun = "mean",
+               geom = "crossbar", 
+               aes(group = disease, color = disease), 
+               linewidth = 0.2,
+               width = 0.2) +
+  stat_summary(fun = "mean",
+               geom = "crossbar", 
+               aes(group = disease_type), 
+               color = "black", 
+               linewidth = 0.2,
+               width = 0.4) +
+  labs(title = "IgG1") +
+  scale_color_manual(values = disease_colors)
+
+p3 <- ggplot(peptides_viral_ig3, aes(x = disease, y = count, color = isotype)) +
+  geom_point() +
+  geom_hline(yintercept = mean(peptides_viral_ig3$count), linetype = "dotted") +
+  stat_summary(fun = "mean",
+               geom = "crossbar", 
+               aes(group = disease, color = disease), 
+               linewidth = 0.2,
+               width = 0.5) +
+  labs(title = "IgG3") +
+  theme(legend.position = "none") +
+  scale_color_manual(values = disease_colors)
+p4 <- ggplot(peptides_viral_ig3, aes(x = disease_type, y = count)) +
+  geom_point(aes(color = disease)) +
+  stat_summary(fun = "mean",
+               geom = "crossbar", 
+               aes(group = disease, color = disease), 
+               linewidth = 0.2,
+               width = 0.2) +
+  stat_summary(fun = "mean",
+               geom = "crossbar", 
+               aes(group = disease_type), 
+               color = "black", 
+               linewidth = 0.2,
+               width = 0.4) +
+  labs(title = "IgG3") +
+  theme(legend.position = "none") +
+  scale_color_manual(values = disease_colors)
+
+
+(p1 + p2) / (p3 + p4) + theme(legend.position = "bottom") + plot_annotation(tag_levels = "A")
+
+
+```
+As can be seen from the graphs there is a very high chance that the two groups are really one. An interesting aspect to this is that the two outliers from IgG1 Covid dataset are suddenly no longer outliers, they slot in perfectly with the viral disease type category. While this is a potential explanation, the low amount of samples makes it is hard to use this to prove that they are the same group.
+
+As it cannot be shown that the two belong to the same group, comparison of groups with anova was first performed using the disease name as differentiating factor. 
+
+```{r}
+isosummary <- function(data, category) {
+  table = data[data$isotype == category, ]
+  model <- lm(table$count~table$disease)
+  print(paste("summary of isotype ANOVA by", category))
+  anova(model)
+  return(anova(model))
+
+}
+isosummary(peptides_pct, "PCT_IGHG1")
+isosummary(peptides_pct, "PCT_IGHG3")
+
+```
+
+With a Pr(>F) of around 0.19 for both isotypes it would inidicate that having a covid or monkeypox has no significant effect on the isotype-fingerprint of a person. Based on the earlier graphs this makes less sense than the idea that the double count of viral infection is interfering.
+
+
+```{r}
+disease_summary <- function(data, category) {
+  table = data[data$isotype == category, ]
+  model <- lm(table$count~table$disease_type)
+  print(paste("summary of isotype ANOVA by", category))
+  return(anova(model))
+}
+
+disease_summary(peptides_pct, "PCT_IGHG1")
+
+disease_summary(peptides_pct, "PCT_IGHG3")
+```
+By counting the viral infections as a single group the Pr(>F) falls to around 0.075 which is not below the general significance level of 0.05. What it is, is within the range that usually inidicate weak correlation, the a value range of 0.10 to 0.05. Considering the lacking number of samples this is a none definite result and should probably be researched further. It does indicate that there is something there.
+
+
+# Code
+```{r}
+
+#head(peptides_pct, 20)
+#tail(peptides_pct, 20)
+
+ggplot(peptides_pct, aes(x = disease, y = count, color = isotype)) +
+  geom_boxplot() +
+  labs(title = "by disease")
+
+ggplot(peptides_pct, aes(x = disease_type, y = count, color = isotype)) +
+  geom_boxplot() +
+  labs(title = "by disease type")
+
+
+
+#head(peptides_collapse, 10)
+
+ggplot(peptides_collapse, aes(x = disease, y = count, color = isotype)) +
+  geom_boxplot()  +
+  labs(title = "by disease")
+
+ggplot(peptides_collapse, aes(x = disease_type, y = count, color = isotype)) +
+  geom_boxplot() +
+  labs(title = "By disease type")
+
+```
+
+## plotting by percentages
+```{r}
+#| label: plotting the means
+stats_pct <- peptides_pct |> # find the mean and standard deviation for each disease
+  group_by(disease_type, disease, isotype) |> 
+  summarise(mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE))
+
+#head(stats_pct)
+
+ggplot(stats_pct, aes(x = disease, y = mean, color = isotype)) +
+  geom_point() +
+  labs(title = "Mean of all subtypes by disease")
+
+ggplot(stats_pct, aes(x = isotype, y = mean, color = disease)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Mean of disease by all subtypes")
+```
+
+
+
+```{r}
+
+stats_collapse <- peptides_collapse |> # find the mean and standard deviation for each disease
+  group_by(disease_type, disease, isotype) |>
+  summarise(num = length(count), mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE))
+
+#head(stats_collapse)
+
+ggplot(stats_collapse, aes(x = disease, y = mean, color = isotype)) +
+  geom_point() +
+  labs(title = "Mean of disease by collapsed isotypes")
+
+ggplot(stats_collapse, aes(x = isotype, y = mean, color = disease)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Mean of collapsed isotype by disease")
+```
+
+
+```{r}
+print(stats_collapse[order(stats_collapse$isotype, decreasing = TRUE),])
+
+model <- lm(peptides_collapse$count ~ factor(peptides_collapse$disease))
+summary(model)
+
+confint(model, level = 0.9)
+```
+
+```{r}
+isosummary <- function(data, category) {
+  table = data[data$isotype == category, ]
+  model <- lm(table$count~table$disease)
+  print(paste("summary of isotype ANOVA by", category))
+  anova(model)
+  return(anova(model))
+
+}
+ighg_table = peptides_collapse[peptides_collapse$isotype == "PCT_IGHG",]
+ighg_model <- lm(ighg_table$count~ighg_table$disease)
+summary(ighg_model)
+```
+
+```{r}
+isosummary(peptides_collapse, "PCT_IGHG")
+isosummary(peptides_collapse, "PCT_IGHA")
+isosummary(peptides_collapse, "PCT_IGHD")
+isosummary(peptides_collapse, "PCT_IGHM")
+```
+
+```{r}
+isosummary(peptides_pct, "PCT_IGHG1")
+isosummary(peptides_pct, "PCT_IGHG2")
+isosummary(peptides_pct, "PCT_IGHG3")
+isosummary(peptides_pct, "PCT_IGHG4")
+isosummary(peptides_pct, "PCT_IGHA1")
+isosummary(peptides_pct, "PCT_IGHA2")
+isosummary(peptides_pct, "PCT_IGHD")
+isosummary(peptides_pct, "PCT_IGHM")
+```
+## Changing to disease type
+
+```{r}
+type_pct <- peptides_pct |> # find the mean and standard deviation for each disease
+  group_by(disease_type, disease, isotype) |> 
+  summarise(mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE))
+
+head(type_pct)
+
+ggplot(type_pct, aes(x = disease, y = mean, color = isotype)) +
+  geom_point() +
+  labs(title = "Mean of all subtypes by disease type")
+
+ggplot(type_pct, aes(x = isotype, y = mean, color = disease)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Mean of disease type by all subtypes")
+```
+
+
+
+```{r}
+type_collapse <- peptides_collapse |> # find the mean and standard deviation for each disease
+  group_by(disease_type, isotype) |>
+  summarise(num = length(count), mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE))
+
+
+ggplot(type_collapse, aes(x = disease_type, y = mean, color = isotype)) +
+  geom_point() +
+  labs(title = "Mean of disease by collapsed isotypes")
+
+ggplot(type_collapse, aes(x = isotype, y = mean, color = disease_type)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Mean of collapsed isotype by disease")
+```
+
+
+
+```{r}
+disease_summary <- function(data, category) {
+  table = data[data$isotype == category, ]
+  model <- lm(table$count~table$disease_type)
+  print(paste("summary of isotype ANOVA by", category))
+  return(anova(model))
+}
+```
+
+```{r}
+disease_summary(peptides_collapse, "PCT_IGHG")
+disease_summary(peptides_collapse, "PCT_IGHA")
+disease_summary(peptides_collapse, "PCT_IGHD")
+disease_summary(peptides_collapse, "PCT_IGHM")
+```
+
+```{r} 
+disease_summary(peptides_pct, "PCT_IGHG1")
+disease_summary(peptides_pct, "PCT_IGHG2")
+disease_summary(peptides_pct, "PCT_IGHG3")
+disease_summary(peptides_pct, "PCT_IGHG4")
+disease_summary(peptides_pct, "PCT_IGHA1")
+disease_summary(peptides_pct, "PCT_IGHA2")
+disease_summary(peptides_pct, "PCT_IGHD")
+disease_summary(peptides_pct, "PCT_IGHM")
+```
+
+## Kruskal-Wallis of disease
+
+```{r}
+kruskal.test(count~disease, data = peptides_pct[peptides_pct$isotype == "PCT_IGHG1",])
+ighg1_model <- lm(count~disease, data = peptides_pct[peptides_pct$isotype == "PCT_IGHG1",])
+summary(ighg1_model)
+anova(ighg1_model)
+
+kruskal.test(count~disease_type, data = peptides_pct[peptides_pct$isotype == "PCT_IGHG1",])
+ighg1_model_type <- lm(count~disease_type, data = peptides_pct[peptides_pct$isotype == "PCT_IGHG1",])
+summary(ighg1_model_type)
+anova(ighg1_model_type)
+
+kruskal.test(count~disease, data = peptides_pct[peptides_pct$isotype == "PCT_IGHG3",])
+
+kruskal.test(count~disease_type, data = peptides_pct[peptides_pct$isotype == "PCT_IGHG3",])
+```
+
+
+
+# Discussion
+
+## Database sourcing with LLMs
+In order to speed up the process of dataset discovery LLMs were used. The two used were ChatGPT and Claude Sonnet. 
+
+When ChatGPT was asked for datasets containig serum or blood samples for different diseases, it only gave a few even when asked for as many as possible. When asked for further datasets it seemed to 'forget' that the datasets had to be serum or blood samples. 
+
+Claude had a different approach, it said it couldn't access the PRIDE API and then produced a python script that could be used to access the API. The script wasn't completely thought through, as it was only able to do keyword search. This made it hard to specify it as only serum samples, and it was just easier to do a keyword search using the PRIDE websites inbuilt search engine, even though it would be preferable to have AND/OR operators in that.
+
+
+## Exhaustion of Proteins
+One of the common problems for finding datasets was the exhaustion of the most common proteins in the sample. These most common proteins usually include both IgG1 and IgA, which is understandable for analysis such as DDA but causes trouble for others when looking for that data, if it is not directly mentioned. While it is easy to comment that it exists in the method section of the report, when it is the umpteenth report of the day to find data it is not very helpful.
+
+It could be intersting to add some fields to the properties tab in the PRIDE archive. Maybe something like a "kits used" or "removed proteins". This may be a bit overkill, or it maybe a bit vague. The main goal of this kind of implementation would be to make it easy to see at an instance that this is a dataset where, "this kind" of modification has been performed. It would spare people from digging into the report itself for that single line to see if the data is useful. They should obviously read the report if they intend to use the data, but that choice should idealy be made as simple as possible. By eliminating as much friction as possible it would be possible to further the use of the data as much as possible.
+
+
+## Annotation of Data
+There was a severe lack of usable annotation of data on PRIDE. Several of the datasets were had files that were only differentiated by number, which makes the only way of knowing which are the control contacting the original makers of the data. It would appear that, to many getting the data onto PRIDE is an afterthought and no time has been put into thinking about what information needs to be included. This could be seen by the constant lack of things like the precursor size, and dataset labeling. It would be interesting if PRIDE added some datapoints that must be filled in to allow the datasets to be posted there. If they actually performed the experiment they should have notated the precursor size, fragmentation size, and other processing information somewhere and it would therefore be easy to make that available for others to redo the data analysis.
+
+Once more it could be useful to have some more properties fields in the archive. It could be sub categories of the Experiment type, or software, the important part is to make it possible to reanalyse the data while lowering the amount of extra work that has to be done. The objective is once more to make it as painless as possible to reuse the data, thereby increasing the potential for future research. There are probably other parameters that I have forgotten to include in this thought but the same basic idea would be applicable here.
+
+Once more it could be useful to have some more properties fields in the archive. It could be sub categories of the Experiment type, or software, the important part is to make it possible to reanalyse the data while lowering the amount of extra work that has to be done.
+
+
+## Statistical testing
+Even though the reliability of the statistical testing is hindered by the low sample pool, there are results of potential interest. When initially treating the data the disease type was of secondary importance, and that led to results where the two viral vectors interfered with each other. With the visible difference in the values from statistical testing between using disease and factor versus using the disease vector as the factor. The p-value differences between the two sample organizations 
+
+
+## The Importance of subtypes
+It would seem that there is no need to strictly classify the data entries into a individual diseases. This may be due to Covid and monkeypox being disease that are very similar in function. It could be interesting to see if this would hold up with other viral diseases that function in a different way. With the current data there is an indication that the main factor of importance for the change in isotype fingerprint is the disease vectors type. Although this is hard to conclude on as Covid and monkeypox were chosen because they are very similar in several aspects. 
+
+
+
+# Conclusion
+This study attmpted to use open source data from past experiments to show that there was a relationship between disease and antibody isotype fingerprint. It uses data from the PRIDE repository in order to test if there is any visible statistical difference in the isotype distribution when afflicted with monkeypox, covid, or not afflicted at all. It would appear that the isotype fingerprint of a person changes while they have an affliction, it would also appear that it is based on the vector type or attact pattern rather than varying from individual disease to disease. There is not enough evidence to prove it definitely in this data. Future experiments could verify the finding, and attempt to expand on it for other disease categories as well as see if there is more variation to be found than simply the identity of the vector.Another area that definately requires future work done, would be in fleshing out the data parameters on PRIDE, this would make the data there actually useful for future studies and reviews, instead of just creating the illusion of usefulness.
+
+# Data 
+The source code for this project can be found on github at https://github.com/Trenchcoat-capybara/Antibody-fingerprints.git. This is a pdf rendering of the quarto document main.qmd which can be found in the root of the project.
+
+```{r}
+#| echo: false
+#| fontsize: \tiny
+#| label: Data
+temp <- dbGetQuery(con, "
+SELECT 
+  DISTINCT(\"Run\"),
+  DENSE_RANK() OVER (ORDER BY \"File.Name\") AS id,
+  CASE
+    WHEN \"File.Name\" ILIKE '%ctr%' Then 'Control'
+    WHEN \"File.Name\" ILIKE '%covid%' THEN 'Covid'
+    WHEN \"File.Name\" ILIKE '%monkey%' THEN 'Monkey_Pox'
+  END AS disease,
+  'PXD036074' AS accension_number
+FROM dia
+ORDER By id")
+print(temp, row.names = FALSE)
+dbDisconnect(con)
+```
+
+# Bibliography
+
+

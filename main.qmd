@@ -160,16 +160,18 @@ Isobaric tag labeling is another approach to running several samples at once. Th
 ### Datasource - PRIDE - NOT DONE YET
 PRIDE is the online protein repository of the European Molecular Biology Laboratory (EMBL). It stands for The PRoteomics IDEntifications Archive database, and is a public data repository for mass spectrometry data. The goal of PRIDE is to support the performace of reproducible research through the application of quality control metrics and enable the reuse of data for purposes other than the original study. The source of the datasets in this study is PRIDE and each dataset contains the ftp address from which it came [@pride].
 
-### FragPipe - NOT DONE YET
+### FragPipe
 FragPipe is a application designed to be a comprehensive computational platform for the analysis of mass spectrometry proteomics data. It functions as a wrapper over several proteomics tools, such as M, IonQuant, DiaNN, and more. It provides a comprehensive list of workflows that combine the tools to turn multistep processes into a set up and run. The analysed data is generally turned into spectral libraries which are easy to work with for future analysis. FragPipe is developed and maintained by Nesvilab. it is open source, and under continuous development. FragPipe documentation can be found at the url https://fragpipe.nesvilab.org/, which is made with github pages and is sourced from the https://github.com/Nesvilab/FragPipe.git github repo [@FragPipe].
 
-### DIA-NN - ADD SECTION HERE
+### DIA-NN 
+Data-independent acquisition Neural Network, is the main tool used by FragPipe to analyse DIA data. It uses deep neural networks to solve one of the largets issues with DIA mass spectrometry, the analysis of the data. As data is not aquired in one round, but rather through cycling it loses the context window that makes it easy to analyse the data. With no baseline DIA data is hard to analyse and peaks can be confused for several precursors at once, as there are several corresponding spectrums. The neural networks are used to distinguish real signals from noise, it combines those predictive capacities with at the time of creation new quantification and interference-correction methods [@Demichev2020].
 
+When it starts it uses a selection of precursor ions to build a spectral library which is used as a foundation for future quantification of the peaks. It then generates a negative control library from the decoy precursor information, and uses that to identify potential peaks that should overlap between the decoy and the real data. After the preparatory work it then procedes to evaluate every elution peak with a set of scores that describes the peaks characteristics, while comparing with the generated spectral library. It then evaluates the degree of interference between the precursors with similar retention time, and if the interference is significant enough to take into account. Then it keeps the ones that have the least interference, this has been found to increase the strict false discovery rate (FDR). One of the most important steps in the workflow is that it assigns statistical significance to the identified precursors, in the form of q-values. The q-values are calculated by assigning a discriminant score based on the potential characterisations of the elution peaks. The program then uses the trained neural network to distingush between the decoys and the actual peaks. It then proceeds to select the most likely fragment based on the level of interference and best correlation [@Demichev2020].
 
 
 
 ## This Study - NOT DONE YET
-This project is a continuation of the study "Data mining antibody sequences for database searching in bottom-up proteomics" which was focused on the isotype distribution of B-cells recorded in the Open Antibody Space. The original study was interested in the variable chain of the antibodies with the goal of creating an antibody database to support the discovery of unregistered antibodies [@Trinh2024].
+This project is a continuation of the study "Data mining antibody sequences for database searching in bottom-up proteomics" which was focused on the isotype distribution of B-cells recorded in the Open Antibody Space. The original study was interested in the variable chain of the antibodies with the goal of creating an antibody database to support the discovery of unregistered antibodies [@Trinh2024]. Unlike the original this study is focused on the distribution of the variation in the Fc part of the antibody.
 
 # Project Description
 
@@ -201,23 +203,26 @@ Antibody profiling will allow us to better understand the immune response to dis
 
 
 # Method - NOT DONE YET
+
 ## Data Collection
 Data was gathered from the PRIDE repository. The goal was to gather datasets of serum samples, from as many differnet diseases as possible. First ChatGPT was asked for serum samples from various diseases, it forgot partway through the conversation that it was supposed to give serum samples, and it wasn't very thorough with the list it created. After having processed the datasets that the chatbot had found, another attempt was made with claude, which produced a python code for questioning the pride api, plus keywords. Finally a brute force search was conducted going through all entries on pride that had organism "homo sapien" and organism part as one of the following; "blood serum, blood, or blood plasma. The datasets with promising names were written down in a document which can be found on the project github as /pride_repository/chat_databases.md 
 
 The next step was to look through the article related to the datasets of interest to find the parameters to use for FragPipe analysis, and to see if there were any issues with the dataset in relation to the project itself. This aimed to remove the datasets where there were issue for the study. The datasets where there was a need to guess which dataset belonged to control and which was of interest. The datasets where antibodies were removed fo increase the clarity of other proteins. The datasets that were targeting something even more specific in the blood or serum.
 
-The chosen dataset was decompressed with a dockerised version of proteowizard using the msconvert tool. The main tags of interest was peakPicking and compression. They were then transfered to the cloud computer where they were analysed using 4 cores of with 6 gb of memory each.
+The chosen dataset was decompressed with a dockerised version of proteowizard using the msconvert tool. The main tags of interest was peakPicking and compression. They were then transfered to the cloud computer where they were analysed using 4 cores of with 6 gb of memory each. 
 
 ## Data Treatment
 After the datasets were verified, the few that had all the information needed, a proper separation of samples noted, without any antibodies removed, and not targeting something irrelevant in the blood, were ran through FragPipe, using the DIA_SpecLib_Quant workflow, which leans on the DIA-NN software. 
 
-The spectral libraries were aggregated (with csvstack from csvkit) the different patients into a single csv, with an new column called patient_id. After that the aggregated csv was input into postgres by using the csvsql function of csvkit. The files were then loaded using the DBI Rpackage, using the file name 
+The spectral libraries were aggregated (with csvstack from csvkit) the different patients into a single csv. After that the aggregated csv was inserted into postgres by using the csvsql function of csvkit. The files were then loaded using the DBI Rpackage, using the file name 
+
+The main data of interest in the output was the PG.Quantity values and their pairing to different isotypes. Each patient had several entries for each of the isotypes, so each of the isotypes was summed into a single value for each isotype per patient. In order to prepare the data for visualization, and to make it comparable across samples, the values were turned into percentages. They were then turned into two sets of data, one with all of the subtypes, and one with the subtypes summed up to represent the distribution between isotypes only.
 
 
 ## Data Visualization and Statistics
-The main data of interest in the output was the PG.Quantity values and their pairing to different isotypes. Each patient had several entries for each of the isotypes, so each of the isotypes was summed into a single value for each isotype per patient. In order to prepare the data for visualization, and to make it comparable across samples, the values were turned into percentages. They were then turned into two sets of data, one with all of the subtypes, and one with the subtypes summed up to represent the distribution between isotypes only.
+Data visualization was performed with R using the ggplot2 package. The goal was originally to compare the distribution of isotypes accross different disease categories, but due to a lack of usable data some compromises had to be made, and only two disease which share a type were used. Statistical analysis was performed using the diseases as different groups, and on them after grouping by disease vector. The main statistical test was ANOVA as it was a comparison across groups. 
 
-Data visualization was performed with R using the ggplot2 package. The goal was originally to compare the distribution of isotypes accross different disease categories, but due to a lack of usable data some compromises had to be made, and only two disease which share a type were used. Statistical analysis was performed using the diseases as different groups, and on them after grouping by disease vector. The main statistical test was ANOVA as it was a comparison across groups.
+
 
 
 
@@ -293,7 +298,11 @@ disease_colors <- c(Control = "#1f77b4",
                     PCT_IGHG = "#1f77b4", 
                     PCT_IGHA = "#9467bd")
 con <- dbConnect(RPostgres::Postgres(), dbname = "antibodies") 
-# The SQL query is being used to access the data that is in the dataset/dia folder, specifically the csv file called stacked.csv which I have added to Postgres to simplify it for myself
+# The SQL query is being used to access the data that is in the dataset/dia folder, i stacked the files in that folder using the csvstack tool which is the data I used, but that file is too big for github, In order to get earlier code to slot in nicely I changed some names. 
+# each had a patient_id, I used unique file names to assign that, as each patient had their own file
+# I used the file name to assign a disease name, the precise name is used in the code
+# I have them grouped in folders during analysis which I use to categorise them
+# Changed PG.Quantity to total_peptides, as that fit in with an earlier attempt
 peptides <- dbGetQuery(con, " 
 SELECT 
   DENSE_RANK() OVER (ORDER BY \"File.Name\") AS patient_id,
