@@ -123,13 +123,26 @@ IgE is the least abundant antibody in the blood. This is probably partially due 
 ### BCR - ADD section
 The B cell receptor is a membrane bound receptor that is constructed using antibodies. Immature antibodies use IgM as the antibody for the BCR, but as they mature it is slowly swapped for IgM. All of the isotypes can be used for constructing BCR. The isotype used is based on the class switch of the B cell. By using different isotypes it is possible for the B cells to have different reactions to the same receptor being triggered. An antibody that forms a part of the BCR is referred to as a membrane bound immunoglobin, or mIg for short. At the Fc end of the antibody is attatched a trans membranal anchor section, which anchors the antibody through the membrane and acts as an intercellular effector when the antibody is triggered. The effector is associated with CD79A and CD79B which each carry an immunoreceptor tyrosine-based activation motif (ITAM). These Motives are what allows the BCR receptor pass on the signal [@Degn2025].
 
-There are several theories about how the BCR receptor works, but it always seems to have some behaviour that defies the logic of the model. What is 
+There are several theories about how the BCR receptor works, but it always seems to have some behaviour that defies the logic of the model. While the model may not have been established, the basic sequence of events is known. The process starts with an variable region of the BCR. It is either triggered by a random floating fragment, or more likely, deliberately triggered by antigen presentation by folicular dendritic cells. The BCR reacts by triggering the ITAM part of CD79A and B. THe ITAMs then trigger a cascade of reactions that always lead to transcriptional changes in the B cell. Which transcriptional changes occur depends on the isotype used in the receptor [@Degn2025].
 
 
 ## Proteomics
 Proteomics is the study of a large amount of proteins from the same source. It allows for the answering of questions in relation to the abundance, localisation, interactions, modification states, and folding of proteins. Proteiomics comes in two main types, bottom-up and top-down. In bottom-up proteomics an overall picture of the protein abundance is created and then further studied in order to get an overviw of the situation, and find out how the different proteins play together. Top-down proteomics [@McArdle2021].
 
 ### Mass Spectrometry
+Proteomics data is mainly gathered by using mass spectrometry. Mass spectrometry is performed using a mass spectrometer is a moleculart weight that is capable of weighing the individual molecules of a sample. A mass specrometer is made up of six components, an inlet system, an Ion source, a mass analyser, a Detector, a vacuum system, and a recorder. Of these six components three (ion source, mass analyser, and detector) are variable, for different analyses. These three components work together to first ionise the sample, sort it, and detect the molecular composition and concentration distribution of the sample.
+
+A mass spectrometer starts with an ion source. The purpose of the ion source is to ionises the sample molecules. The ionised particles can then be converted from a non-gaseous phase to a gaseous phase so that they can be analysed by the mass analyser. There are several ways to ionise a molecule, and that has lead to the creation of several different ion source instruments. Ionization is split into hard ionization and soft ionization. Which to use depends on once more on the molecules that are being analysed. THe categorization of hard and soft corresponds to low and high internal energy being transfered to the sample molecules during the ionization process. For biological samples with complex molecules, soft methods are preferable. They do not break the molecule in the process which would make the analysis unreliable [@Bhardwaj2014]. Currently the two main ion sources used in proteomics are matrix-assisted laser desorption/ionization (MALDI) and electrospray-ionization, which are both soft methods.
+
+The mass analyser is the part of the mass spect that is used to affect the ions so that the detector can detect differences between them. The sample molecules are separated based on their charge to mass ratio. There are several different types mass analyzers. Each mass analyser uses a different methods to separate the ions based on their characteristics.
+
+After the mass separation a relevant detector is used to determine the mass of the ion based on how it behaved inside the mass analyser. It detects the current signal from the passing ion as well as its relative quantity.
+
+There are several advantages to using mass spectrometry over more traditional methods.
+
+
+
+
 Mass Spectrometry is how proteomics data is acquired, there are several types of mass spectrometry and the data has to be treated in different ways depending on which is used. Mass spectrometry is performed using a Mass Spectrometer, of which there are several kinds. It is becoming increasingly normal to run subsequent mass spectrometers, refered to as tandem mass spectrometry, in order to first analyse the precursors and then fragment them for further analysis.
 
 
