@@ -81,7 +81,7 @@ Class switch recombination is the process by which B cells change the constant r
 ### V(D)J Recombination
 The variability of the variable region partially comes from V(D)J Recombination. V(D)J Recombination is different between the variable regions of the heavy chain and light chain. On the heavy chain it involves all three segments the V(ariable), D(diverse), and J(joining) segments, the light chain only has the V and J segments. By combining multiple different V and J segments it is possible to generate several different combinations [@Chi2020]. By combining these basic forms with inserted bases from SHM it is possible for the immunne system to reach a high level of starting diversity for affinity maturation to improve upon.
 
-### Fc Glycosylation - NOT DONE YET
+### Fc Glycosylation 
 Post-translational modifications play an important role in the function and behaviour of proteins. It is one of the main things that differentiate the functions of different antibodies. Potential modifications include glycosylation, amino acid modification and oxidations. Glycosylation is the attachment of a oligosaccharide molecule to an amino acid. It can occur in two overarching forms: O-glycosylation where the oligosaccharide is attached to the oxygen atom of the hydroxyl group of a serine or threonine and N-glycosylation where it is attached to the nitrogen atom of an asparagine side chain. There are several different types of glycosylation, named after the oligosaccharide that is being used. These different oligosaccharides have different effects on the function of the protein they are bound to. The oligosaccharide used has also been observed to vary from continent to continent, whether this is due to genetics, diet, or other circumstances is unknown. But it is known that glycosylation type can change with age, and that indicates that it is potentially a combination of several different factors [@Casimiro2025].
 
 Glycosylation is one of the main differentiators in functionallity between the isotypes, and their subtypes. The different isotypes have different amounts of asparagines that can accept N-glycosylation. Glycosylation and its effect on antibodies has mainly been studied for IgG antibodies. N-glycosylation of IgG Fc region mainly happens in the cells where the antibodies are produced. The glycosylation of Asn297 in IgG opens the configuration of it Fc domain. Antibodies are not the only part of the humoral immunity that is affected by glycosylation. Fc$\gamma$RIIIa has five N-glycosylation sites, the IgG Asn297 glycosylation site can interact with the Asn162 site of the immune receptor, to promote antibody receptor cross-linking. Glycosylation status is not a permanent thing, and it is not absolute. Only 12% of IgG3 are glycosylated on Asn392 which it alone amongst the IgGs possess. Glycosylation also directly affect the functionallity of the antibodies themselves. Glycosylation in IgG has been linked to increased binding of antibodies to C1q, which activates the classical complement pathway [@Casimiro2025].
@@ -182,7 +182,7 @@ Stable isotope labeling rely on feeding the sample with stable isotopes of the a
 Isobaric tag labeling is another approach to running several samples at once. There are various methods of performing isobaric tag labeling. The basic approach is to attach a different isotopic mass tag to all of the molecules in a sample. These mass tags can then later be used to differentiate between the samples. The tags themselves are stable isotope reagents that can be attached to to the peptides, and differ enough that it is possible to note the difference between them during analysis [@Chen2021].
 
 
-### Datasource - PRIDE - NOT DONE YET
+### Datasource 
 PRIDE is the online protein repository of the European Molecular Biology Laboratory (EMBL). It stands for The PRoteomics IDEntifications Archive database, and is a public data repository for mass spectrometry data. The goal of PRIDE is to support the performace of reproducible research through the application of quality control metrics and enable the reuse of data for purposes other than the original study. The source of the datasets in this study is PRIDE and each dataset contains the ftp address from which it came [@pride]. PRIDE has four major web interfaces: PRIDE archive, PRIDE Archive USI, the PRIDE Crosslinking resource, and PRIDE spectral libraries. These different resources fulfil different functions in the PRIDE ecosystem. PRIDE supports the FAIR (Findable, Accessible, Interoperable, Reusable) principals, and is constantly working towards the furtherance of these concepts in the database [@Riverol2025].
 
 ### FragPipe
@@ -250,7 +250,7 @@ Data was gathered from the PRIDE repository. The goal was to gather datasets of 
 The next step was to look through the article related to the datasets of interest to find the parameters to use for FragPipe analysis, and to see if there were any issues with the dataset in relation to the project itself. This aimed to remove the datasets where there were issue that made it useless for the study. The datasets where there was a need to guess which dataset belonged to control and which was of interest. The datasets where antibodies were removed fo increase the clarity of other proteins. The datasets that were targeting something even more specific in the blood or serum.
 
 
-## Data Treatment - BROKEN THOUGHT IN THE END
+## Data Treatment 
 After the datasets were verified, the few that had all the information needed, a proper separation of samples noted, without any antibodies removed, and not targeting something irrelevant in the blood, were ran through FragPipe, using the appropriate workflow, which leans on the DIA-NN software. 
 
 The chosen dataset was accession number PXD036074 which was decompressed with a dockerised version of proteowizard using the msconvert tool. The main tags of interest was peakPicking and compression. They were then transfered to the cloud computer where they were analysed using 4 cores of with 6 gb of memory each. 
@@ -482,7 +482,7 @@ IgD is generally produced in the peripheries which would mean that the source of
 
 ```{r}
 #| echo: false
-#| fig-cap: "temp"
+#| fig-cap: Distribution of isotypes for each disease.
 ggplot(peptides_pct, aes(x = disease, y = count, color = isotype)) +
   geom_boxplot() +
   labs(title = "by disease",
@@ -500,7 +500,7 @@ In order to get a better understanding of the differences in between the disease
 ```{r}
 #| echo: false
 #| label: plotting the means in results
-#| fig-cap: "Comparison of mean percentage of the distribution of antibody isotypes across "
+#| fig-cap:  Comparison of mean percentage of antibody isotypes across for the three disease states.
 #| fig-width: 10
 #| fig-height: 5
 stats_pct <- peptides_pct |> # find the mean and standard deviation for each disease
@@ -592,7 +592,7 @@ There are a couple of statistical tests that can be used to detect of there are 
 ```{r}
 #| echo: false
 #| warning: false
-#| fig-cap: temp
+#| fig-cap: Distribution of isotypes percentage per patient across the diseases.
 peptides_para_viral <- peptides_pct[peptides_pct$disease_type == "Viral",] |>
   group_by(disease_type, isotype) |>
   summarise(n = length(count), mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE), var = var(count, na.rm = TRUE)) |>
@@ -716,201 +716,6 @@ disease_summary(peptides_pct, "PCT_IGHG1", "percentage of IgG1")
 disease_summary(peptides_pct, "PCT_IGHG3", "percentage of IgG3")
 ```
 By counting the viral infections as a single group the Pr(>F) falls to around 0.075 which is not below the general significance level of 0.05. What it is, is within the range that usually inidicate weak correlation, the a value range of 0.10 to 0.05. Considering the lacking number of samples this is a none definite result and should probably be researched further. It does indicate that there is something there.
-
-
-# Code
-```{r}
-
-#head(peptides_pct, 20)
-#tail(peptides_pct, 20)
-
-ggplot(peptides_pct, aes(x = disease, y = count, color = isotype)) +
-  geom_boxplot() +
-  labs(title = "by disease")
-
-ggplot(peptides_pct, aes(x = disease_type, y = count, color = isotype)) +
-  geom_boxplot() +
-  labs(title = "by disease type")
-
-
-
-#head(peptides_collapse, 10)
-
-ggplot(peptides_collapse, aes(x = disease, y = count, color = isotype)) +
-  geom_boxplot()  +
-  labs(title = "by disease")
-
-ggplot(peptides_collapse, aes(x = disease_type, y = count, color = isotype)) +
-  geom_boxplot() +
-  labs(title = "By disease type")
-
-```
-
-## plotting by percentages
-```{r}
-#| label: plotting the means
-stats_pct <- peptides_pct |> # find the mean and standard deviation for each disease
-  group_by(disease_type, disease, isotype) |> 
-  summarise(mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE))
-
-#head(stats_pct)
-
-ggplot(stats_pct, aes(x = disease, y = mean, color = isotype)) +
-  geom_point() +
-  labs(title = "Mean of all subtypes by disease")
-
-ggplot(stats_pct, aes(x = isotype, y = mean, color = disease)) +
-  geom_point() +
-  theme(axis.text.x = element_text(angle = 45)) +
-  labs(title = "Mean of disease by all subtypes")
-```
-
-
-
-```{r}
-
-stats_collapse <- peptides_collapse |> # find the mean and standard deviation for each disease
-  group_by(disease_type, disease, isotype) |>
-  summarise(num = length(count), mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE))
-
-#head(stats_collapse)
-
-ggplot(stats_collapse, aes(x = disease, y = mean, color = isotype)) +
-  geom_point() +
-  labs(title = "Mean of disease by collapsed isotypes")
-
-ggplot(stats_collapse, aes(x = isotype, y = mean, color = disease)) +
-  geom_point() +
-  theme(axis.text.x = element_text(angle = 45)) +
-  labs(title = "Mean of collapsed isotype by disease")
-```
-
-
-```{r}
-print(stats_collapse[order(stats_collapse$isotype, decreasing = TRUE),])
-
-model <- lm(peptides_collapse$count ~ factor(peptides_collapse$disease))
-summary(model)
-
-confint(model, level = 0.9)
-```
-
-```{r}
-isosummary <- function(data, category) {
-  table = data[data$isotype == category, ]
-  model <- lm(table$count~table$disease)
-  print(paste("summary of isotype ANOVA by", category))
-  anova(model)
-  return(anova(model))
-
-}
-ighg_table = peptides_collapse[peptides_collapse$isotype == "PCT_IGHG",]
-ighg_model <- lm(ighg_table$count~ighg_table$disease)
-summary(ighg_model)
-```
-
-```{r}
-isosummary(peptides_collapse, "PCT_IGHG")
-isosummary(peptides_collapse, "PCT_IGHA")
-isosummary(peptides_collapse, "PCT_IGHD")
-isosummary(peptides_collapse, "PCT_IGHM")
-```
-
-```{r}
-isosummary(peptides_pct, "PCT_IGHG1")
-isosummary(peptides_pct, "PCT_IGHG2")
-isosummary(peptides_pct, "PCT_IGHG3")
-isosummary(peptides_pct, "PCT_IGHG4")
-isosummary(peptides_pct, "PCT_IGHA1")
-isosummary(peptides_pct, "PCT_IGHA2")
-isosummary(peptides_pct, "PCT_IGHD")
-isosummary(peptides_pct, "PCT_IGHM")
-```
-## Changing to disease type
-
-```{r}
-type_pct <- peptides_pct |> # find the mean and standard deviation for each disease
-  group_by(disease_type, disease, isotype) |> 
-  summarise(mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE))
-
-head(type_pct)
-
-ggplot(type_pct, aes(x = disease, y = mean, color = isotype)) +
-  geom_point() +
-  labs(title = "Mean of all subtypes by disease type")
-
-ggplot(type_pct, aes(x = isotype, y = mean, color = disease)) +
-  geom_point() +
-  theme(axis.text.x = element_text(angle = 45)) +
-  labs(title = "Mean of disease type by all subtypes")
-```
-
-
-
-```{r}
-type_collapse <- peptides_collapse |> # find the mean and standard deviation for each disease
-  group_by(disease_type, isotype) |>
-  summarise(num = length(count), mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE))
-
-
-ggplot(type_collapse, aes(x = disease_type, y = mean, color = isotype)) +
-  geom_point() +
-  labs(title = "Mean of disease by collapsed isotypes")
-
-ggplot(type_collapse, aes(x = isotype, y = mean, color = disease_type)) +
-  geom_point() +
-  theme(axis.text.x = element_text(angle = 45)) +
-  labs(title = "Mean of collapsed isotype by disease")
-```
-
-
-
-```{r}
-disease_summary <- function(data, category) {
-  table = data[data$isotype == category, ]
-  model <- lm(table$count~table$disease_type)
-  print(paste("summary of isotype ANOVA by", category))
-  return(anova(model))
-}
-```
-
-```{r}
-disease_summary(peptides_collapse, "PCT_IGHG")
-disease_summary(peptides_collapse, "PCT_IGHA")
-disease_summary(peptides_collapse, "PCT_IGHD")
-disease_summary(peptides_collapse, "PCT_IGHM")
-```
-
-```{r} 
-disease_summary(peptides_pct, "PCT_IGHG1")
-disease_summary(peptides_pct, "PCT_IGHG2")
-disease_summary(peptides_pct, "PCT_IGHG3")
-disease_summary(peptides_pct, "PCT_IGHG4")
-disease_summary(peptides_pct, "PCT_IGHA1")
-disease_summary(peptides_pct, "PCT_IGHA2")
-disease_summary(peptides_pct, "PCT_IGHD")
-disease_summary(peptides_pct, "PCT_IGHM")
-```
-
-## Kruskal-Wallis of disease
-
-```{r}
-kruskal.test(count~disease, data = peptides_pct[peptides_pct$isotype == "PCT_IGHG1",])
-ighg1_model <- lm(count~disease, data = peptides_pct[peptides_pct$isotype == "PCT_IGHG1",])
-summary(ighg1_model)
-anova(ighg1_model)
-
-kruskal.test(count~disease_type, data = peptides_pct[peptides_pct$isotype == "PCT_IGHG1",])
-ighg1_model_type <- lm(count~disease_type, data = peptides_pct[peptides_pct$isotype == "PCT_IGHG1",])
-summary(ighg1_model_type)
-anova(ighg1_model_type)
-
-kruskal.test(count~disease, data = peptides_pct[peptides_pct$isotype == "PCT_IGHG3",])
-
-kruskal.test(count~disease_type, data = peptides_pct[peptides_pct$isotype == "PCT_IGHG3",])
-```
-
-
 
 # Discussion
 
