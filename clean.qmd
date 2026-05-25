@@ -26,9 +26,21 @@ format:
           \usetikzlibrary{positioning, chains}
           \usepackage{graphicx}
           \graphicspath{{Pictures/}}
+
+          \usepackage{fontspec}
+          \setmainfont{TeX Gyre Termes}
+          \setsansfont{TeX Gyre Heros}
+          % \setmonofont{Consolas}
+
+          \usepackage{sectsty}
+          \allsectionsfont{\bfseries}
+          \sectionfont{\Huge\centering}
+          \subsectionfont{\LARGE\centering}
+          \subsubsectionfont{\Large\centering}
       - file: preamble.tex
 ---
 \newpage
+
 # Introduction
 
 ## Humoral Immune Response
@@ -268,42 +280,6 @@ Data visualization was performed with R using the ggplot2 package. The goal was 
 
 
 
-
-```{=latex}
-\begin{figure}[htbp]
-\tikzset{
-  block/.style = {
-    rectangle, 
-    draw, 
-    text width=10em, 
-    text centered, 
-    rounded corners, 
-    minimum height=3em
-  }
-}
-
-\begin{tikzpicture}
-[node distance = 5cm,
-start chain=going below,]
-\node (n1) at (0,0) [block] {\includegraphics*[height=2.5em]{PRIDE}};
-\node (n2) [block, right of=n1] {\includegraphics*[height=2.5em]{FragPipe}};
-\node (n3) [block, right of=n2] {\includegraphics*[height=2.5em]{Csvkit}};
-\node (n4) [block, below of=n1, yshift =2cm] {\includegraphics*[height=2.5em]{PostgreSQL}};
-\node (n5) [block, right of=n4] {\includegraphics*[height=2.5em]{DBI}};
-\node (n6) [block, right of=n5] {\includegraphics*[height=2.5em]{R}};
-
-\draw [->] (n1) -- (n2);
-\draw [->] (n2) -- (n3);
-\draw [thick,->] (n3) -- (n4);
-\draw [->] (n4) -- (n5);
-\draw [->] (n5) -- (n6);
-\end{tikzpicture}
-\caption{Overview of the workflow. Start by searching PRIDE for datasets. Run the datasets through FragPipe. Use csvkit to merge the outputs into a single table that can be used, and put into postgres. Use Postgres for data management and DBI to interact with it in R. Do the statistical work in R.}
-\label{fig:antibody-overview}
-\end{figure}
-```
-
-
 ```{r}
 #| echo: false
 #| output: false
@@ -414,17 +390,63 @@ peptides_collapse <- peptides_pct |> # gather all the different ighg and igha in
   summarise(count = sum(count), .groups = "drop")
 ```
 
+```{=latex}
+\begin{figure}[tbp]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[
+    node distance=2.2cm and 2.5cm,
+    box/.style={
+        draw,
+        rounded corners,
+        align=center,
+        minimum width=3.2cm,
+        minimum height=1.4cm,
+        font=\small
+    },
+    arrow/.style={-latex, thick}
+]
 
+% --- Top row ---
+\node[box] (pride) {\includegraphics*[height=1.7em]{PRIDE} \\\footnotesize dataset search};
+\node[box, right=of pride] (fragpipe) {\includegraphics*[height=1.7em]{FragPipe} \\\footnotesize peptide identification};
+\node[box, right=of fragpipe] (csvkit) {\includegraphics*[height=1.7em]{Csvkit} \\\footnotesize merge tables};
+
+% --- Bottom row ---
+\node[box, below=of pride] (postgres) {\includegraphics*[height=1em]{PostgreSQL} PostgreSQL\\\footnotesize data storage};
+\node[box, right=of postgres] (dbi) {\includegraphics*[height=1.7em]{DBI} \\\footnotesize R interface};
+\node[box, right=of dbi] (r) {\includegraphics*[height=1em]{R} R\\\footnotesize analysis};
+
+% --- Arrows (top row flow) ---
+\draw[arrow] (pride) -- (fragpipe);
+\draw[arrow] (fragpipe) -- (csvkit);
+
+% --- Vertical drop ---
+\draw[arrow] (csvkit) -- (postgres);
+
+% --- Bottom row flow ---
+\draw[arrow] (postgres) -- (dbi);
+\draw[arrow] (dbi) -- (r);
+
+\end{tikzpicture}
+}
+\caption{Overview of the workflow from dataset acquisition to statistical analysis.}
+\label{fig:workflow}
+\end{figure}
+```
+
+\newpage
 # Results
 ## Distribution of the Data
 
 The data that I was able to analyse was from the study "The human host response to monkeypox infection: a proteomic case series study". The study contained the following distribution of patients, and each patient had entries for the following unique isotype.
 ```{r}
 #| echo: false
-#| label: Distribution of data graphs
+#| label: fig-isocount
 #| fig-cap: Distribution of disease and antibody isotypes across the datasets. (A) The number of patients of each type in the dataset. (B) The number of patients where the peptide was registered.
 #| fig-width: 10
 #| fig-height: 5
+#| fig-pos: "H"
 peptides_wide <- peptides |>
   group_by(patient_id, isotype, disease, disease_type) |>
   summarise(total_peptides = sum(total_peptides)) |>
@@ -471,8 +493,7 @@ table_1 + table_2 +
   plot_annotation(tag_levels = 'A')
 ```
 
-There are more control samples than either of the disease
-It is interesting to note that there is not a single count of IgE, and the only isotype that is partially represented is IgD. The lack of IgE can be explained by the nature of IgE, but is there a reason for the missing counts of IgD.
+There are more control samples than there are samples for either of the disease, the two diseases combined contains one more sample than the control pool. It is interesting to note that there is not a single count of IgE, and the only isotype that is partially represented is IgD. The lack of IgE can be explained by the nature of IgE, but is there a reason for the missing counts of IgD.
 
 IgE is the antibody with the lowest natural concentration in the blood. On top of that, it has the receptor with the highest affinity. That might be the reason that it wasn't present in a single sample, even though it was data collected with DIA methodology, which should be more sensitive to diverse low-quantity proteins. Another interesting reason may be that the patients in this data are from Britain. As IgE is a response to parasites, the historically improved sanitations - especially the separation of drinking water and excretion - has lowered the average level of IgE in the people of Britain, where the data is from.
 
@@ -481,8 +502,10 @@ IgD is generally produced in the peripheries which would mean that the source of
 
 
 ```{r}
+#| label: fig-dist
 #| echo: false
-#| fig-cap: Distribution of isotypes for each disease.
+#| fig-cap: "Distribution of isotypes for each disease."
+#| fig-pos: "H"
 ggplot(peptides_pct, aes(x = disease, y = count, color = isotype)) +
   geom_boxplot() +
   labs(title = "by disease",
@@ -490,7 +513,7 @@ ggplot(peptides_pct, aes(x = disease, y = count, color = isotype)) +
   scale_color_manual(values = disease_colors)
 
 ```
-As can be seen in figure ___ , there is a very low amount of IgD in the samples, this could be why there are so many IgDs that are not recorded, the amount may just stradle the line of detectability. This would overlap with the plausible reason that the IgE has not been found.
+As can be seen in @fig-dist, there is a very low amount of IgD in the samples, this could be why there are so many IgDs that are not recorded, the amount may just stradle the line of detectability. This would overlap with the plausible reason that the IgE has not been found.
 
 Another thing of interest is the Covid IgG1. Based on the boxplot shape, there seems to be 2 extreme outliers. This could be because there are only 10 samples in the study, meaning that it is easy for there to be a section where there weren't any reads, leading to them being classified as outliers. It would appear based on the graphs that the IgG1 outliers of Covid would fit in with the monkeypox values, this could make sense as both diseases are very similar, and should therefore bring forth a similar reaction from the immune system.
 
@@ -499,10 +522,11 @@ Another thing of interest is the Covid IgG1. Based on the boxplot shape, there s
 In order to get a better understanding of the differences in between the diseases and the control the means were calculated and plotted.
 ```{r}
 #| echo: false
-#| label: plotting the means in results
-#| fig-cap:  Comparison of mean percentage of antibody isotypes across for the three disease states.
+#| label: fig-comppct
+#| fig-cap:  "Comparison of mean percentage of antibody isotypes across for the three disease states."
 #| fig-width: 10
 #| fig-height: 5
+#| fig-pos: "H"
 stats_pct <- peptides_pct |> # find the mean and standard deviation for each disease
   group_by(disease_type, disease, isotype) |> 
   summarise(mean = mean(count, na.rm = TRUE), std = sd(count, na.rm = TRUE))
@@ -748,12 +772,12 @@ Even though the reliability of the statistical testing is hindered by the low sa
 While there was an intention to see if it was possible to use a random forest to find constant differences between different categories of disease. With the small sample size and disease type pool it makes no sense to fit a random forest on top of it.
 
 ## The Importance of subtypes
-With the OAS being isotype distribution data based on genetic data. It raises the question, is it necessary to include the subtypes? It is easier to perform an analysis using the genome of extracted cells. This could be an incentive, but that would presume that every B cell is producing the same amount of antibodies, and the subtypes are not of major importance. There is a known difference between the active production of antibodies of different types of B cell. Different types of antibodies produce different amounts of antibodies. But even if that is accounted for there seems to be a need to take account of the subtype as well. As can be seen from the data in figure 5 the increase in IgG1 is similar to the decrease in IgG3, this difference would be lost when using genomics in order to record the change in isotype fingerprint.
+With the OAS being isotype distribution data based on genetic data. It raises the question, is it necessary to include the subtypes? It is easier to perform an analysis using the genome of extracted cells. This could be an incentive, but that would presume that every B cell is producing the same amount of antibodies, and the subtypes are not of major importance. There is a known difference between the active production of antibodies of different types of B cell. Different types of antibodies produce different amounts of antibodies. But even if that is accounted for there seems to be a need to take account of the subtype as well. As can be seen from the data in @fig-comppct the increase in IgG1 is similar to the decrease in IgG3, this difference would be lost when using genomics in order to record the change in isotype fingerprint.
 
 It would also seem that there is no need to strictly classify the data entries according to individual diseases. This may be due to Covid and monkeypox being disease that are very similar in terms of function. It could be interesting to see if this would hold up with other viral diseases that function in a different way. With the current data there is an indication that the main factor of importance for the change in isotype fingerprint is the disease vectors type. Although this is hard to conclude on as Covid and monkeypox were chosen because they are very similar in several aspects. 
 
 ## Sample type
-The samples being serum samples may skew the viewed isotype distributions. This probably has an greater effect on IgD and IgE as can be seen from the amount of samples that contain these two isotypes in figure ___ which shows that 23 out of the 31 samples contain IgD and not a single sample registered IgE. 
+The samples being serum samples may skew the viewed isotype distributions. This probably has an greater effect on IgD and IgE as can be seen from the amount of samples that contain these two isotypes in @fig-isocount which shows that 23 out of the 31 samples contain IgD and not a single sample registered IgE. 
 
 IgD is naturally concentrated around the peripheral areas of the circulatory system. It would therefore make sense that samples taken from other places would contain a much lower level of IgD. The lower levels will skew the isotype balance away from the IgD hidding anything that may be gained from knowing the true value. 
 
@@ -787,5 +811,41 @@ print(temp, row.names = FALSE)
 dbDisconnect(con)
 ```
 
+
+```{=latex}
+\begin{figure}[H]
+\tikzset{
+  block/.style = {
+    rectangle, 
+    draw, 
+    text width=10em, 
+    text centered, 
+    rounded corners, 
+    minimum height=3em
+  }
+}
+
+\begin{tikzpicture}
+[node distance = 5cm,
+start chain=going below,]
+\node (n1) at (0,0) [block] {\includegraphics*[height=2.5em]{PRIDE}};
+\node (n2) [block, right of=n1] {\includegraphics*[height=2.5em]{FragPipe}};
+\node (n3) [block, right of=n2] {\includegraphics*[height=2.5em]{Csvkit}};
+\node (n4) [block, below of=n1, yshift =2cm] {\includegraphics*[height=2.5em]{PostgreSQL}};
+\node (n5) [block, right of=n4] {\includegraphics*[height=2.5em]{DBI}};
+\node (n6) [block, right of=n5] {\includegraphics*[height=2.5em]{R}};
+
+\draw [->] (n1) -- (n2);
+\draw [->] (n2) -- (n3);
+\draw [thick,->] (n3) -- (n4);
+\draw [->] (n4) -- (n5);
+\draw [->] (n5) -- (n6);
+\end{tikzpicture}
+\caption{Overview of the workflow. Start by searching PRIDE for datasets. Run the datasets through FragPipe. Use csvkit to merge the outputs into a single table that can be used, and put into postgres. Use Postgres for data management and DBI to interact with it in R. Do the statistical work in R.}
+\label{fig:antibody-overview}
+\end{figure}
+```
+
 # Bibliography
+
 
