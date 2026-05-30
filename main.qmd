@@ -699,6 +699,7 @@ p4 <- ggplot(peptides_viral_ig3, aes(x = count, after_stat(density))) +
 ```
 There appears to somekind of relationship, but there are too few samples to say from a graph. It is therefore necessary to perform some statistical tests to see if the two viral samples should be counted separately. The density graphs with control samples show two small bumps, this is another potential indicator that there are two factors here, Control and Viral. With the purely viral graphs only having one peak, it once more supports the pooling of viral samples.
 
+\newpage
 ## Statistical Comparison of Viral Diseases
 There are a couple of statistical tests that can be used to detect the differences between two groups. The most basic one is the ANOVA test, which compares within group variation with between group variation.
 
@@ -907,7 +908,7 @@ SELECT
   'PXD036074' AS accension_number
 FROM dia
 ORDER By id")
-print(temp, row.names = FALSE)
+kable(temp, row.names = FALSE)
 dbDisconnect(con)
 ```
 
